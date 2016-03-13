@@ -30,21 +30,6 @@
   </entry>
   
   <entry>
-    <title><![CDATA[test]]></title>
-    <link href="http://lifeofszh.cn/2016/02/06/test/"/>
-    <id>http://lifeofszh.cn/2016/02/06/test/</id>
-    <published>2016-02-06T02:17:26.000Z</published>
-    <updated>2016-02-06T02:17:51.000Z</updated>
-    <content type="html"><![CDATA[<p>Yes it is ok!</p>
-]]></content>
-    <summary type="html">
-    <![CDATA[<p>Yes it is ok!</p>
-]]>
-    </summary>
-    
-  </entry>
-  
-  <entry>
     <title><![CDATA[deploy]]></title>
     <link href="http://lifeofszh.cn/2016/02/04/deploy/"/>
     <id>http://lifeofszh.cn/2016/02/04/deploy/</id>
@@ -54,21 +39,6 @@
 ]]></content>
     <summary type="html">
     <![CDATA[<p>###Yes it is a test for 部署</p>
-]]>
-    </summary>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[test-post]]></title>
-    <link href="http://lifeofszh.cn/2016/02/04/test-post/"/>
-    <id>http://lifeofszh.cn/2016/02/04/test-post/</id>
-    <published>2016-02-04T02:44:02.000Z</published>
-    <updated>2016-02-04T02:44:33.000Z</updated>
-    <content type="html"><![CDATA[<p>This is a Test for Hexo</p>
-]]></content>
-    <summary type="html">
-    <![CDATA[<p>This is a Test for Hexo</p>
 ]]>
     </summary>
     
