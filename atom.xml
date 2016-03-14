@@ -4,7 +4,7 @@
   <subtitle><![CDATA[To be a good man]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://lifeofszh.cn/"/>
-  <updated>2016-03-14T02:41:14.000Z</updated>
+  <updated>2016-03-14T03:11:40.000Z</updated>
   <id>http://lifeofszh.cn/</id>
   
   <author>
@@ -13,6 +13,28 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[新建Hexo博客]]></title>
+    <link href="http://lifeofszh.cn/2016/03/14/%E6%96%B0%E5%BB%BAHexo%E5%8D%9A%E5%AE%A2/"/>
+    <id>http://lifeofszh.cn/2016/03/14/新建Hexo博客/</id>
+    <published>2016-03-14T03:02:05.000Z</published>
+    <updated>2016-03-14T03:11:40.000Z</updated>
+    <content type="html"><![CDATA[<h3 id="scriptogr-am"><a href="#scriptogr-am" class="headerlink" title="scriptogr.am"></a>scriptogr.am</h3><p>一天突然发现scriptogr 关门大吉，也没有一封邮件通知用户，一脸怨念。</p>
+<blockquote>
+<p>Since September 28th 2015 Scriptogram officially closed. We considered<br>every option before making the difficult decision to end the product.<br>But sometimes there is only one reasonable way out.</p>
+<p>Finally, we would like to thank all our dedicated users through the<br>years.</p>
+<p>Thank you guys!</p>
+</blockquote>
+<h3 id="Hexo"><a href="#Hexo" class="headerlink" title="Hexo"></a>Hexo</h3><p>不想折腾了，想想还是在github做静态页面安逸。就整了个域名，部署起来。头疼的是原来博客虽然有存档，但是在hexo中支持不是很好，会有报错。<br>比如Django的模版标签，Title 不识别，需要转化为title。 </p>
+<p>(Hexo 介绍及文档)[<a href="https://hexo.io/zh-cn/docs/" target="_blank" rel="external">https://hexo.io/zh-cn/docs/</a>]</p>
+<p>顺便也是整理了原来的博客</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h3 id="scriptogr-am"><a href="#scriptogr-am" class="headerlink" title="scriptogr.am"></a>scriptogr.am</h3><p>一天突然发现scriptogr 关门大吉，也没有一封邮件通知]]>
+    </summary>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[微信接口计划搁浅]]></title>
@@ -800,45 +822,6 @@ Because the view is just a projection of the model, the controller is completely
       <category term="git" scheme="http://lifeofszh.cn/tags/git/"/>
     
       <category term="linux" scheme="http://lifeofszh.cn/tags/linux/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[深入理解 Django ORM Query 机制]]></title>
-    <link href="http://lifeofszh.cn/2013/09/08/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%20Django%20ORM%20Query%20%E6%9C%BA%E5%88%B6/"/>
-    <id>http://lifeofszh.cn/2013/09/08/深入理解 Django ORM Query 机制/</id>
-    <published>2013-09-08T00:18:00.000Z</published>
-    <updated>2016-03-14T02:45:19.000Z</updated>
-    <content type="html"><![CDATA[<h3 id="u7F18_u8D77"><a href="#u7F18_u8D77" class="headerlink" title="缘起"></a>缘起</h3><p>  在和木工讨论优化Django自带分页机制的时候，遇到一个问题：Django 的queryset 在执行分页时，是一次取出所有数据，再按每页大小来分割数据呢，还是一次取出每页大小的数据？<br>  最理想的状态，自然是每次从数据库取每页大小的数据了——实地考察了Django的分页代码后，找到一条最核心的代码：<code>Object.query.all()[bottom:top]</code><br>  这又引发新的思考：这条代码，会从数据库读取全部数据，再做列表的slice吗？</p>
-<h3 id="u7A76_u7ADF_u2014_u2014_u2014_u2014_u5B9E_u8DF5_u662F_u68C0_u9A8C_u771F_u7406_u7684_u552F_u4E00_u6807_u51C6"><a href="#u7A76_u7ADF_u2014_u2014_u2014_u2014_u5B9E_u8DF5_u662F_u68C0_u9A8C_u771F_u7406_u7684_u552F_u4E00_u6807_u51C6" class="headerlink" title="究竟————实践是检验真理的唯一标准"></a>究竟————实践是检验真理的唯一标准</h3><p>  如果<code>Object.query.all()[bottom:top]</code>取的是全部数据，再切片，那么她的实际执行时间和<code>Object.query.all()</code>应该是相同或略大于。实验结果是前者的时间明显小于后者，相差一千倍。木工指出：这里看到的时间虽然确实相差很大，但还不能直接得出，QuerySet的slice 数据读取是部分的，我们需要更本质的证据，比如SQL。<br>  确实以上的实验，不具备普遍性，也不够精确，只能说是个经验方法，所以接下来我们就搬出重型武器——<code>From django.db import connection</code><br>  connection 返回每次生成的SQL的语句和执行时间列表<br>  打印的结果是：</p>
-<pre><code>Object.query.all()[0:9] 生成 select * from xx limit 10 …
-Object.query.all() 则不含有limit 10
-</code></pre><p>   原来如此！</p>
-<h3 id="u526F_u4EA7_u54C1_u2014_u2014QuerySets_are_lazy"><a href="#u526F_u4EA7_u54C1_u2014_u2014QuerySets_are_lazy" class="headerlink" title="副产品——QuerySets are lazy"></a>副产品——QuerySets are lazy</h3><p>  查询Django的官方文档，找到关键字lazy 。是的，几乎所有的ORM查询采用的都是lazy的!</p>
-<pre><code>QuerySets are lazy – the act of creating a QuerySet doesn’t involve any database activity. You can stack filters together all day long, and Django won’t actually run the query until the QuerySet is evaluated. Take a look at this example:
-</code></pre><p>  这段的大意是：QuerySet 不会直接出发数据库，只有当你想要获取里面的数据时才会有所动作，比如打印每条记录</p>
-<pre><code>demands = Demnad.objects.all()   #不会生成SQL语句
-print [d.id for d in demands ]   #生成SQL语句，并执行
-</code></pre><p>  同样的还有</p>
-<pre><code>len(demands)
-list(demands)
-</code></pre><p>  不难得出结论：<code>list(demands)[0:9]</code> 效率明显要低于<code>demands[0:9]</code><br>  这是因为list()操作 相当于print，迫使QuerySet生成SQL并执行获取全部数据<br>  类似的还有len()，她的替代方案是QuerySet 的count的函数</p>
-<p><a href="https://docs.djangoproject.com/en/dev/topics/db/queries/#querysets-are-lazy" target="_blank" rel="external">QuerySet are lazy</a>  </p>
-<h3 id="u526F_u4EA7_u54C1_u2014_u2014QuerySets_Cache"><a href="#u526F_u4EA7_u54C1_u2014_u2014QuerySets_Cache" class="headerlink" title="副产品——QuerySets Cache"></a>副产品——QuerySets Cache</h3><p>  记住以下几点：</p>
-<pre><code>print([e.headline for e in Entry.objects.all()])
-print([e.headline for e in Entry.objects.all()])
-</code></pre><p>  执行两次Entry.objects.all()系统Cache不会缓存，只有当你<code>entry_query = Entry.objects.all()</code> 才会有缓存</p>
-<pre><code>queryset = Entry.objects.all()
-print queryset[5] QuerySet的slice不会被缓存
-[entry for entry in queryset]
-print queryset[5] 除非已经计算过的
-</code></pre><p><a href="https://docs.djangoproject.com/en/dev/topics/db/queries/#caching-and-querysets" target="_blank" rel="external"> QuerySets Cache</a></p>
-]]></content>
-    <summary type="html">
-    <![CDATA[<h3 id="u7F18_u8D77"><a href="#u7F18_u8D77" class="headerlink" title="缘起"></a>缘起</h3><p>  在和木工讨论优化Django自带分页机制的时候，遇到一个问题：Django 的queryset 在执]]>
-    </summary>
-    
-      <category term="Geek" scheme="http://lifeofszh.cn/tags/Geek/"/>
     
   </entry>
   
