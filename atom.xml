@@ -4,7 +4,7 @@
   <subtitle><![CDATA[To be a good man]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://lifeofszh.cn/"/>
-  <updated>2016-03-14T03:13:19.000Z</updated>
+  <updated>2016-03-14T03:15:50.000Z</updated>
   <id>http://lifeofszh.cn/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://lifeofszh.cn/2016/03/14/%E6%96%B0%E5%BB%BAHexo%E5%8D%9A%E5%AE%A2/"/>
     <id>http://lifeofszh.cn/2016/03/14/新建Hexo博客/</id>
     <published>2016-03-14T03:02:05.000Z</published>
-    <updated>2016-03-14T03:13:19.000Z</updated>
+    <updated>2016-03-14T03:15:50.000Z</updated>
     <content type="html"><![CDATA[<h3 id="scriptogr-am"><a href="#scriptogr-am" class="headerlink" title="scriptogr.am"></a>scriptogr.am</h3><p>一天突然发现scriptogr 关门大吉，也没有一封邮件通知用户，一脸怨念。</p>
 <blockquote>
 <p>Since September 28th 2015 Scriptogram officially closed. We considered<br>every option before making the difficult decision to end the product.<br>But sometimes there is only one reasonable way out.</p>
@@ -27,8 +27,8 @@
 <p>Thank you guys!</p>
 </blockquote>
 <h3 id="Hexo"><a href="#Hexo" class="headerlink" title="Hexo"></a>Hexo</h3><p>不想折腾了，想想还是在github做静态页面安逸。就整了个域名，部署起来。头疼的是原来博客虽然有存档，但是在hexo中支持不是很好，会有报错。<br>比如Django的模版标签，Title 不识别，需要转化为title。 </p>
-<p><a href="https://hexo.io/zh-cn/docs/" target="_blank" rel="external">Hexo 介绍及文档</a></p>
 <p>顺便也是整理了原来的博客</p>
+<h4 id="u53C2_u8003_u94FE_u63A5"><a href="#u53C2_u8003_u94FE_u63A5" class="headerlink" title="参考链接"></a>参考链接</h4><p><a href="http://ibruce.info/2013/11/22/hexo-your-blog/" target="_blank" rel="external">hexo 你的博客</a><br><a href="https://hexo.io/zh-cn/docs/" target="_blank" rel="external">Hexo 介绍及文档</a></p>
 ]]></content>
     <summary type="html">
     <![CDATA[<h3 id="scriptogr-am"><a href="#scriptogr-am" class="headerlink" title="scriptogr.am"></a>scriptogr.am</h3><p>一天突然发现scriptogr 关门大吉，也没有一封邮件通知]]>
