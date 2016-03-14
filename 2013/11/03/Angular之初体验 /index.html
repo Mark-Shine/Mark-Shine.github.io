@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>从后端的角度看Angular之初体验 | Mark Shang</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="angular," />
+  
+
+  <meta name="description" content="第一次接触Angular, 是在一个老外的博客中，而且居然是谷歌的亲儿子。顿时有了好感，文档写得还比较粗浅，请看一哥们的吐槽：
+
+I realize the hackers are busy coding and have no time to deal with BS documentation but they are inviting a lot of bad code if they do">
+<meta property="og:type" content="article">
+<meta property="og:title" content="从后端的角度看Angular之初体验">
+<meta property="og:url" content="http://lifeofszh.cn/2013/11/03/Angular之初体验 /index.html">
+<meta property="og:site_name" content="Mark Shang">
+<meta property="og:description" content="第一次接触Angular, 是在一个老外的博客中，而且居然是谷歌的亲儿子。顿时有了好感，文档写得还比较粗浅，请看一哥们的吐槽：
+
+I realize the hackers are busy coding and have no time to deal with BS documentation but they are inviting a lot of bad code if they do">
+<meta property="og:image" content="http://docs.angularjs.org/img/One_Way_Data_Binding.png">
+<meta property="og:image" content="http://docs.angularjs.org/img/Two_Way_Data_Binding.png">
+<meta property="og:updated_time" content="2016-03-14T02:47:36.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="从后端的角度看Angular之初体验">
+<meta name="twitter:description" content="第一次接触Angular, 是在一个老外的博客中，而且居然是谷歌的亲儿子。顿时有了好感，文档写得还比较粗浅，请看一哥们的吐槽：
+
+I realize the hackers are busy coding and have no time to deal with BS documentation but they are inviting a lot of bad code if they do">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  
+
+  <link href="/css/styles.css?v=ed12202f" rel="stylesheet">
+
+  
+
+  
+
+</head>
+
+<body>
+
+  
+    <a href="#modal-one" class="toolbox-mobile">盒子</a>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a 
+            class="CIRCLE" 
+            href="/archives/"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a 
+            class="CIRCLE" 
+            href="/tag/"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a 
+            class="CIRCLE" 
+            href="/about/"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#u5173_u4E8E_u4EE3_u7801_u8BBE_u8BA1_uFF0Cangular_u662F_u600E_u4E48_u60F3_u7684"><span class="toc-text">关于代码设计，angular是怎么想的</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#u6211_u8981_u60CA_u8273_u5168_u573A"><span class="toc-text">我要惊艳全场</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Django_u9047_u4E0AAngular_u7684_u77DB_u4E0E_u76FE"><span class="toc-text">Django遇上Angular的矛与盾</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-Angular之初体验 " class="article article-type-post" itemscope itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">从后端的角度看Angular之初体验</h1>
+
+    <div class="article-meta">
+      <span>2013-11-03</span>
+
+      <span> | </span>
+
+      <span class="article-author">Mark</span>
+
+      <span> | </span>
+
+      
+
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p>第一次接触Angular, 是在一个老外的博客中，而且居然是谷歌的亲儿子。顿时有了好感，文档写得还比较粗浅，请看一哥们的吐槽：</p>
+<blockquote>
+<p>I realize the hackers are busy coding and have no time to deal with BS documentation but they are inviting a lot of bad code if they don’t teach us the basics…</p>
+</blockquote>
+<p>大意：牛逼er们都忙着coding了，根本没时间去完善文档，这只会带来更多的渣代码</p>
+<p>这个时候，大神看不下去了，附言。</p>
+<blockquote>
+<p>All the frameworks with Dependency Injection in its core seem obscure when you get started with them.<br>The best documentations in young frameworks like this one unfortunately is reading the source. Hard work but it’s worthy because you learn a lot in the process</p>
+</blockquote>
+<p>大意：一个年轻框架最好的文档其实是它的源码。可能读起来很难，不过相比之下，你获得的，也是超值的。</p>
+<p>大神前面其实给了一些建议包括参考的网站，不过楼上一直觉得文档太差看不下去，所以给了上面这段（<a href="http://docs.angularjs.org/api/AUTO.$provide#factory" target="_blank" rel="external">节选</a>）</p>
+<h3 id="u5173_u4E8E_u4EE3_u7801_u8BBE_u8BA1_uFF0Cangular_u662F_u600E_u4E48_u60F3_u7684"><a href="#u5173_u4E8E_u4EE3_u7801_u8BBE_u8BA1_uFF0Cangular_u662F_u600E_u4E48_u60F3_u7684" class="headerlink" title="关于代码设计，angular是怎么想的"></a>关于代码设计，angular是怎么想的</h3><p>在接触angular之前，作为服务端工程师，我接触的js框架其实不多，也就JQuery、KISSY。JQuery给我的印象很友好，前端零基础的小伙子用起来，倒也顺手，而且文档丰富。JQuery算是古典主义的JS框架的优秀代表了。</p>
+<p>相比JQuery, Angular的理念更像是用后端的思维去写前端代码。视图和模型是分离的，修改模型，视图相应的就会有变动，是不是和MVC有些相像？</p>
+<p>传统模式：</p>
+<p><img src="http://docs.angularjs.org/img/One_Way_Data_Binding.png" alt="image"></p>
+<p>Angular：</p>
+<p><img src="http://docs.angularjs.org/img/Two_Way_Data_Binding.png" alt="image"></p>
+<p>原文说明：</p>
+<pre><code>They are different because first the template (which is the uncompiled HTML along with any additional markup or directives) is compiled on the browser, and second, the compilation step produces a live view. We say live because any changes to the view are immediately reflected in the model, and any changes in the model are propagated to the view. This makes the model always the single-source-of-truth for the application state, greatly simplifying the programming model for the developer. You can think of the view as simply an instant projection of your model.
+Because the view is just a projection of the model, the controller is completely separated from the view and unaware of it. This makes testing a snap because it is easy to test your controller in isolation without the view and the related DOM/browser dependency
+</code></pre><p>如果明天考试，那重点肯定是这句了：<code>Because the view is just a projection of the model, the controller is completely separated from the view and unaware of it</code> 大意: View、Model是相关的，控制层则是独立的</p>
+<h3 id="u6211_u8981_u60CA_u8273_u5168_u573A"><a href="#u6211_u8981_u60CA_u8273_u5168_u573A" class="headerlink" title="我要惊艳全场"></a>我要惊艳全场</h3><p>光说原理其实还不足以惊艳到我，因为尼玛太抽象。作为前端菜鸟我们从来不看资料，看疗效。</p>
+<p>有一天，我看见栖邀在用Angular重写一些项目。我就好奇的问他，这个有什么好用的吗？虽然我知道他是很牛逼的框架——大家都这么说（道听途说）</p>
+<p>栖邀拂了下他那油光发亮的秀发，一甩脑袋，说：“哇靠，这个框架很好用诶！你看……”</p>
+<p>后来看到的效果，让我久久不能忘怀。直接导致我在后来的项目中，一遇到前端问题，就考虑如果用Angular应该咋做。可惜此处不能直接展示效果，附上<a href="http://angularjs.org/" target="_blank" rel="external">链接</a>，各位自己感受吧。</p>
+<h3 id="Django_u9047_u4E0AAngular_u7684_u77DB_u4E0E_u76FE"><a href="#Django_u9047_u4E0AAngular_u7684_u77DB_u4E0E_u76FE" class="headerlink" title="Django遇上Angular的矛与盾"></a>Django遇上Angular的矛与盾</h3><p>做为一个学习Django开发的半吊子工程师，想要用 Angular 遇到的第一个问题就是“如何将两者和谐的捏在一起”。 因为Django自带模板系统，而Angular 并不需要Django输出页面，它要的很简单：吐给我足够的数据就可以了，至于页面我自己可以handle。</p>
+<p>如果你想使用Angular的快捷与舒适，那么就必须做些牺牲：重构模板甚至文件结构。Django只要把必要的数据吐到一个数据页面，然后由Anugalr的Controller读取数据，然后生成页面即可。好处也很明显，你可以欢快轻便的用上Angular特性。</p>
+<p>举个栗子哟！</p>
+<p>有一张待办表，我在页面勾选完成后，前端删除该条内容。相应的，后续条目的序号应该重新排位，像原先的2、3、4、5,就升为到1、2、3、4了。这样一个小需求，如果用传统方法做，可能会挺复杂。如果用Angular的ngRepeat生成列表条目，那么一旦页面有变动，比如删除第一条。那么后续的条目的index（即为序号）会自动更新，你甚至什么都需要做，Angular已经为你准备好需要的一切了。</p>
+<p>但这有一个前提，就是页面的条目是由ngRepeat循环生成的，换句话说，就是你要重构模板页面的代码！！！是重构、还是用JQuery直接实现，孰轻孰重，亲们自己感受吧。</p>
+
+    
+  </div>
+</article>
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal-one" aria-hidden="true">
+  <a href="#close" class="cover" aria-hidden="true"></a>
+  <div class="modal-dialog">
+    <div class="modal-header">
+      <a href="#close" class="btn-close" aria-hidden="true">关闭</a>
+    </div>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'llloff';
+    
+    var disqus_url = 'http://lifeofszh.cn/2013/11/03/Angular之初体验 /';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+
+    
+
+
+
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/fastclick.js', function() {
+      loadScript('/js/app.js', function() {
+        // load success
+      });
+    });
+  }
+</script>
+
+</body>
+</html>

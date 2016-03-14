@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Django signal 介绍 | Mark Shang</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="Mark Shang,后端,系统设计,Python, Django, Celery, Redis" />
+  
+
+  <meta name="description" content="Django 的Signal，它是同步的，意思是一个请求进来，如果有要出发signal ，就必须等这个signal处理完成，才能返回该请求。
+那么他有什么用处呢？剥离和业务无关的逻辑，简化主要业务逻辑。 比如一个用户注册了，我们该给他发一封邮件确认，这个发邮件的动作就可以通过signal触发。实例代码可以参考django源码中，auth 用户login的实现。 
+如果我希望他能够异步处理信息该怎么">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Django signal 介绍">
+<meta property="og:url" content="http://lifeofszh.cn/2014/06/12/django-signal-/index.html">
+<meta property="og:site_name" content="Mark Shang">
+<meta property="og:description" content="Django 的Signal，它是同步的，意思是一个请求进来，如果有要出发signal ，就必须等这个signal处理完成，才能返回该请求。
+那么他有什么用处呢？剥离和业务无关的逻辑，简化主要业务逻辑。 比如一个用户注册了，我们该给他发一封邮件确认，这个发邮件的动作就可以通过signal触发。实例代码可以参考django源码中，auth 用户login的实现。 
+如果我希望他能够异步处理信息该怎么">
+<meta property="og:updated_time" content="2016-03-14T02:37:42.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Django signal 介绍">
+<meta name="twitter:description" content="Django 的Signal，它是同步的，意思是一个请求进来，如果有要出发signal ，就必须等这个signal处理完成，才能返回该请求。
+那么他有什么用处呢？剥离和业务无关的逻辑，简化主要业务逻辑。 比如一个用户注册了，我们该给他发一封邮件确认，这个发邮件的动作就可以通过signal触发。实例代码可以参考django源码中，auth 用户login的实现。 
+如果我希望他能够异步处理信息该怎么">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  
+
+  <link href="/css/styles.css?v=ed12202f" rel="stylesheet">
+
+  
+
+  
+
+</head>
+
+<body>
+
+  
+    <a href="#modal-one" class="toolbox-mobile">盒子</a>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a 
+            class="CIRCLE" 
+            href="/archives/"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a 
+            class="CIRCLE" 
+            href="/tag/"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a 
+            class="CIRCLE" 
+            href="/about/"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-django-signal-" class="article article-type-post" itemscope itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">Django signal 介绍</h1>
+
+    <div class="article-meta">
+      <span>2014-06-12</span>
+
+      <span> | </span>
+
+      <span class="article-author">Mark</span>
+
+      <span> | </span>
+
+      
+
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p>Django 的Signal，它是同步的，意思是一个请求进来，如果有要出发signal ，就必须等这个signal处理完成，才能返回该请求。</p>
+<p>那么他有什么用处呢？<br>剥离和业务无关的逻辑，简化主要业务逻辑。 比如一个用户注册了，我们该给他发一封邮件确认，这个发邮件的动作就可以通过signal触发。实例代码可以参考django源码中，auth 用户login的实现。 </p>
+<p>如果我希望他能够异步处理信息该怎么做？<br>此处考虑使用Django+celery+RabbitMQ</p>
+<p>不知道怎么的，居然把密码和账号放到博客公开了……真是郁闷，明明之前有检查一遍的。还有scriptogr排版是怎么回事！</p>
+
+    
+  </div>
+</article>
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal-one" aria-hidden="true">
+  <a href="#close" class="cover" aria-hidden="true"></a>
+  <div class="modal-dialog">
+    <div class="modal-header">
+      <a href="#close" class="btn-close" aria-hidden="true">关闭</a>
+    </div>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'llloff';
+    
+    var disqus_url = 'http://lifeofszh.cn/2014/06/12/django-signal-/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+
+    
+
+
+
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/fastclick.js', function() {
+      loadScript('/js/app.js', function() {
+        // load success
+      });
+    });
+  }
+</script>
+
+</body>
+</html>

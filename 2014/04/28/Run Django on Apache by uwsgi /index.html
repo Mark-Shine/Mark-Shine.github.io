@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Run Django on Apache by uwsgi | Mark Shang</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="Mark Shang,后端,系统设计,Python, Django, Celery, Redis" />
+  
+
+  <meta name="description" content="前提环境：
+CentOS
+python2.7
+
+步骤
+安装mod_uwsgi模块
+配置uwsgi.ini文件
+配置apache文件
+
+安装mod_uwsgi：由于apache对uwsgi的支持没有ngxin好（建议用ngxin），所以里面用到的模块mod_uwsgi.so需要手工安装。下载mod_uwsgi.c, 用Apache的apxs编译（部分系统可能没有该命令）——yum search ht">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Run Django on Apache by uwsgi">
+<meta property="og:url" content="http://lifeofszh.cn/2014/04/28/Run Django on Apache by uwsgi /index.html">
+<meta property="og:site_name" content="Mark Shang">
+<meta property="og:description" content="前提环境：
+CentOS
+python2.7
+
+步骤
+安装mod_uwsgi模块
+配置uwsgi.ini文件
+配置apache文件
+
+安装mod_uwsgi：由于apache对uwsgi的支持没有ngxin好（建议用ngxin），所以里面用到的模块mod_uwsgi.so需要手工安装。下载mod_uwsgi.c, 用Apache的apxs编译（部分系统可能没有该命令）——yum search ht">
+<meta property="og:updated_time" content="2016-03-14T02:53:25.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Run Django on Apache by uwsgi">
+<meta name="twitter:description" content="前提环境：
+CentOS
+python2.7
+
+步骤
+安装mod_uwsgi模块
+配置uwsgi.ini文件
+配置apache文件
+
+安装mod_uwsgi：由于apache对uwsgi的支持没有ngxin好（建议用ngxin），所以里面用到的模块mod_uwsgi.so需要手工安装。下载mod_uwsgi.c, 用Apache的apxs编译（部分系统可能没有该命令）——yum search ht">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  
+
+  <link href="/css/styles.css?v=ed12202f" rel="stylesheet">
+
+  
+
+  
+
+</head>
+
+<body>
+
+  
+    <a href="#modal-one" class="toolbox-mobile">盒子</a>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a 
+            class="CIRCLE" 
+            href="/archives/"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a 
+            class="CIRCLE" 
+            href="/tag/"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a 
+            class="CIRCLE" 
+            href="/about/"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#u524D_u63D0_u73AF_u5883_uFF1A"><span class="toc-text">前提环境：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#u6B65_u9AA4"><span class="toc-text">步骤</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#u5B89_u88C5mod_uwsgi_uFF1A"><span class="toc-text">安装mod_uwsgi：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#u914D_u7F6Euwsgi-ini_u6587_u4EF6"><span class="toc-text">配置uwsgi.ini文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Aapche_u914D_u7F6E"><span class="toc-text">Aapche配置</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#u83DC_u9E1F_u72AF_u9519_u7684_u8303_u4F8B"><span class="toc-text">菜鸟犯错的范例</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#u53C2_u8003_u8D44_u6599"><span class="toc-text">参考资料</span></a></li></ol></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-Run Django on Apache by uwsgi " class="article article-type-post" itemscope itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">Run Django on Apache by uwsgi</h1>
+
+    <div class="article-meta">
+      <span>2014-04-28</span>
+
+      <span> | </span>
+
+      <span class="article-author">Mark</span>
+
+      <span> | </span>
+
+      
+
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h3 id="u524D_u63D0_u73AF_u5883_uFF1A"><a href="#u524D_u63D0_u73AF_u5883_uFF1A" class="headerlink" title="前提环境："></a>前提环境：</h3><ul>
+<li>CentOS</li>
+<li>python2.7</li>
+</ul>
+<h3 id="u6B65_u9AA4"><a href="#u6B65_u9AA4" class="headerlink" title="步骤"></a>步骤</h3><ol>
+<li>安装mod_uwsgi模块</li>
+<li>配置uwsgi.ini文件</li>
+<li>配置apache文件</li>
+</ol>
+<h4 id="u5B89_u88C5mod_uwsgi_uFF1A"><a href="#u5B89_u88C5mod_uwsgi_uFF1A" class="headerlink" title="安装mod_uwsgi："></a>安装mod_uwsgi：</h4><p>由于apache对uwsgi的支持没有ngxin好（建议用ngxin），所以里面用到的模块mod_uwsgi.so需要手工安装。<br>下载<a href="https://raw.github.com/unbit/uwsgi/master/apache2/mod_uwsgi.c" target="_blank" rel="external">mod_uwsgi.c</a>, 用Apache的apxs编译（部分系统可能没有该命令）——yum search httpd-devel， 安装对应的包即可。<br>最后sudo apxs -i -a -c mod_uwsgi.c，系统会自动在http.conf中添加LoadModule uwsgi_module modules/mod_uwsgi.so</p>
+<h4 id="u914D_u7F6Euwsgi-ini_u6587_u4EF6"><a href="#u914D_u7F6Euwsgi-ini_u6587_u4EF6" class="headerlink" title="配置uwsgi.ini文件"></a>配置uwsgi.ini文件</h4><pre><code>[uwsgi]
+touch-reload=/var/www/site (程序目录)
+socket = 127.0.0.1:8080 (端口)
+workers = 2 （线程）
+chdir = /var/www/site  
+env = DJANGO_SETTINGS_MODULE=meals.settings_pro (指定settng文件)
+module = django.core.handlers.wsgi:WSGIHandler()
+</code></pre><p>这个文件可以直接放在    /var/www/site 目录下</p>
+<p>哪我们还需要一个脚本去启动django</p>
+<pre><code>//启动脚本
+source ~/.bashrc //注意uwsgi可以指定python工作目录，所以可以不必像此处加载virtualenvwrapper
+workon rest //进入指定py环境
+NAME=&quot;meals&quot; (项目名称)
+if [ ! -n &quot;$NAME&quot; ];then
+echo &quot;no arguments&quot;
+exit;
+fi
+
+echo $NAME
+//检查是否有在运行的项目文件, 有即kill
+ID=`ps -ef | grep &quot;$NAME&quot; | grep -v &quot;$0&quot; | grep -v &quot;grep&quot; | awk &apos;{print $2}&apos;`
+echo $ID
+echo &quot;################################################&quot;
+for id in $ID
+do
+kill -9 $id
+echo &quot;kill $id&quot;
+done
+echo  &quot;################################################&quot;
+//用uwsgi启动, --daemonize标示后台，指定log文件和ini文件
+uwsgi --ini /var/www/site/uwsgi_meals.ini --daemonize /var/www/site/log_meals.log
+</code></pre><p>chmod o+x startup.sh文件， sh startup.sh 即可启动django</p>
+<h4 id="Aapche_u914D_u7F6E"><a href="#Aapche_u914D_u7F6E" class="headerlink" title="Aapche配置"></a>Aapche配置</h4><p>因为对Apache的配置不是很熟悉，摸索了一天之久。</p>
+<pre><code>&lt;VirtualHost *:80&gt;
+    ServerAdmin xxx@gmail.com
+    ServerName xxx.com
+    ServerAlias www.xxx.com
+
+    DocumentRoot /var/www
+
+    &lt;Directory &gt;&lt;/Directory&gt;
+        Options FollowSymLinks Indexes
+        AllowOverride None
+    &lt;/Directory&gt;
+
+    &lt;Directory /var/www&gt;&lt;/Directory&gt;
+        Options Indexes FollowSymLinks MultiViews
+        AllowOverride None
+        Order allow,deny
+        allow from all
+    &lt;/Directory&gt;
+
+    &lt;Location &gt;
+        Options FollowSymLinks Indexes
+        SetHandler uwsgi-handler
+        uWSGISocket 127.0.0.1:8080
+    &lt;/Location&gt;
+    &lt;Location /static&gt;
+         SetHandler none
+    &lt;/Location&gt;
+
+    Alias /static /var/www/xxx/static
+
+   &lt;/VirtualHost&gt;
+</code></pre><h5 id="u83DC_u9E1F_u72AF_u9519_u7684_u8303_u4F8B"><a href="#u83DC_u9E1F_u72AF_u9519_u7684_u8303_u4F8B" class="headerlink" title="菜鸟犯错的范例"></a>菜鸟犯错的范例</h5><p>一开始弄错，将项目文件放在root下结果apache无法读取静态文件（因为没有权限）</p>
+<p>再后来项目移到/var/www/下，又出现apache静态文件404。</p>
+<pre><code>DocumentRoot /var/www/
+Alias /static /var/www/app.chifaxian.com/static
+&lt;Directory /var/www/app.chifaxian.com/static&gt;
+   SetHandler None
+   Order allow,deny
+    Allow from all
+&lt;/Directory&gt;
+&lt;Location &gt;&lt;/Location&gt;
+    SetHandler uwsgi-handler
+    uWSGISocket 127.0.0.1:8080
+&lt;/Location&gt;
+
+//没有添加如下代码：结果找不到文件显示404
+&lt;Location /static&gt;
+            SetHandler none
+   &lt;/Location&gt;
+</code></pre><p>  最后重启 service httpd restart</p>
+<p>  访问成功.</p>
+<p> 一路上翻了很多博客和资料，因为没有深入理解apache配置，所以花了很多时间。</p>
+<h4 id="u53C2_u8003_u8D44_u6599"><a href="#u53C2_u8003_u8D44_u6599" class="headerlink" title="参考资料"></a>参考资料</h4><ol>
+<li><a href="http://adf.ly/l9FgB" target="_blank" rel="external">Apache+uwsgi+django基于目录配置站点</a></li>
+<li><a href="http://adf.ly/l9FRc" target="_blank" rel="external">Setting up Django with Apache and uwsgi on Ubuntu 12.10</a></li>
+<li><a href="http://toytoygogie.blogspot.sg/2010/04/centos-apxs-command-not-found.html" target="_blank" rel="external">CentOS “apxs” command not found</a>需要翻墙 </li>
+</ol>
+
+    
+  </div>
+</article>
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal-one" aria-hidden="true">
+  <a href="#close" class="cover" aria-hidden="true"></a>
+  <div class="modal-dialog">
+    <div class="modal-header">
+      <a href="#close" class="btn-close" aria-hidden="true">关闭</a>
+    </div>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'llloff';
+    
+    var disqus_url = 'http://lifeofszh.cn/2014/04/28/Run Django on Apache by uwsgi /';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+
+    
+
+
+
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/fastclick.js', function() {
+      loadScript('/js/app.js', function() {
+        // load success
+      });
+    });
+  }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Django 实时系统的另类实现 | Mark Shang</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="Mark Shang,后端,系统设计,Python, Django, Celery, Redis" />
+  
+
+  <meta name="description" content="概述基于Tornado, Redis, Django, SSE协议 实现Django的实时通信系统
+缘起业务上要求能够实现一旦服务器收到警报，立刻将信息反馈到页面——简单地说，就是弹框加BIBI声。
+角色由于Django不支持异步，所以本质上是无法满足实时的要求——他一个请求进来是block住的，直到任务完成才返回。 即使是用uwsgi技术，也只能将可处理的线程支撑到两位数以下。
+Tornado天">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Django 实时系统的另类实现">
+<meta property="og:url" content="http://lifeofszh.cn/2014/06/16/django realtime by redis tornado sse/index.html">
+<meta property="og:site_name" content="Mark Shang">
+<meta property="og:description" content="概述基于Tornado, Redis, Django, SSE协议 实现Django的实时通信系统
+缘起业务上要求能够实现一旦服务器收到警报，立刻将信息反馈到页面——简单地说，就是弹框加BIBI声。
+角色由于Django不支持异步，所以本质上是无法满足实时的要求——他一个请求进来是block住的，直到任务完成才返回。 即使是用uwsgi技术，也只能将可处理的线程支撑到两位数以下。
+Tornado天">
+<meta property="og:updated_time" content="2016-03-14T02:49:11.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Django 实时系统的另类实现">
+<meta name="twitter:description" content="概述基于Tornado, Redis, Django, SSE协议 实现Django的实时通信系统
+缘起业务上要求能够实现一旦服务器收到警报，立刻将信息反馈到页面——简单地说，就是弹框加BIBI声。
+角色由于Django不支持异步，所以本质上是无法满足实时的要求——他一个请求进来是block住的，直到任务完成才返回。 即使是用uwsgi技术，也只能将可处理的线程支撑到两位数以下。
+Tornado天">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  
+
+  <link href="/css/styles.css?v=ed12202f" rel="stylesheet">
+
+  
+
+  
+
+</head>
+
+<body>
+
+  
+    <a href="#modal-one" class="toolbox-mobile">盒子</a>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a 
+            class="CIRCLE" 
+            href="/archives/"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a 
+            class="CIRCLE" 
+            href="/tag/"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a 
+            class="CIRCLE" 
+            href="/about/"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#u6982_u8FF0"><span class="toc-text">概述</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#u7F18_u8D77"><span class="toc-text">缘起</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#u89D2_u8272"><span class="toc-text">角色</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#u6B65_u9AA4"><span class="toc-text">步骤</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#u8865_u5145"><span class="toc-text">补充</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-django realtime by redis tornado sse" class="article article-type-post" itemscope itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">Django 实时系统的另类实现</h1>
+
+    <div class="article-meta">
+      <span>2014-06-16</span>
+
+      <span> | </span>
+
+      <span class="article-author">Mark</span>
+
+      <span> | </span>
+
+      
+
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h4 id="u6982_u8FF0"><a href="#u6982_u8FF0" class="headerlink" title="概述"></a>概述</h4><p>基于Tornado, Redis, Django, SSE协议 实现Django的实时通信系统</p>
+<h4 id="u7F18_u8D77"><a href="#u7F18_u8D77" class="headerlink" title="缘起"></a>缘起</h4><p>业务上要求能够实现一旦服务器收到警报，立刻将信息反馈到页面——简单地说，就是弹框加BIBI声。</p>
+<h4 id="u89D2_u8272"><a href="#u89D2_u8272" class="headerlink" title="角色"></a>角色</h4><p>由于Django不支持异步，所以本质上是无法满足实时的要求——他一个请求进来是block住的，直到任务完成才返回。 即使是用uwsgi技术，也只能将可处理的线程支撑到两位数以下。</p>
+<p>Tornado天生支持异步，当然也可以用Flask。</p>
+<p>听Alex Maccaw说SSE（ Server-Sent Events）比Websocket更好。举个简单的例子，SSE不需要特殊的协议支持，因为它是基于传统的HTTP，而Websocket则是需要full-duplex connections。其次Websocket缺少一些工程设计，而SSE能够设定自动重新连接, 事件ID, 和发送结构化数据。<br>更多的信息，可以参考<a href="http://www.html5rocks.com/en/tutorials/eventsource/basics/" target="_blank" rel="external">Stream Updates with Server-Sent Events
+</a>，<a href="http://blog.alexmaccaw.com/killing-a-library" target="_blank" rel="external">Killing a library</a>（用ruby实现了SSE，略简单）</p>
+<p>迫于工程项目的紧急性，只能找现成的轮子——今天的主角<a href="https://github.com/truetug/tornado-sse" target="_blank" rel="external">Tornado-sse</a></p>
+<p>需要的安装Django-sse（Django内发送信息到redis）, sse（将信息处理成符合sse标准的包）, redis（Django和Tornado通信）。</p>
+<h4 id="u6B65_u9AA4"><a href="#u6B65_u9AA4" class="headerlink" title="步骤"></a>步骤</h4><p>在Django的setting文件中添加</p>
+<pre><code>### SSE ###
+INSTALLED_APPS += (
+&apos;redis&apos;,
+&apos;django_sse&apos;,
+&apos;tornado_sse&apos;,
+)
+
+REDIS_SSEQUEUE_CONNECTION_SETTINGS = {
+&apos;location&apos;: &apos;localhost:6379&apos;,
+&apos;db&apos;: 0,
+}
+### SSE ###
+</code></pre><p>在tasks.py文件（就是你用来执行任务的文件）</p>
+<pre><code>from django_sse.redisqueue import send_event
+def notify(message):
+
+    info = json.dumps({
+    &apos;type&apos;: &apos;foo&apos;,
+    &apos;html&apos;: message,
+    })
+
+    send_event(&apos;message&apos;, info, &apos;sse&apos;) # 默认频道
+    return True
+当然我建议将这个函数设置为signal触发
+</code></pre><p>在base.html中加入</p>
+<pre><code>    &lt;head&gt;
+    &lt;script type=&quot;text/javascript&quot; src=&quot;tornado_sse/jquery.eventsource.js&quot;&gt;&lt;/script&gt;
+    &lt;script type=&quot;text/javascript&quot; src=&quot;tornado_sse/sse.js&quot;&gt;&lt;/script&gt;
+    &lt;/head&gt;
+
+&lt;body sse-data=&quot;/sse/&quot;&gt;
+&lt;/body&gt;
+如果是本地的话，需要修改为127.0.0.1:8888/
+</code></pre><p>服务器环境如果是Apache</p>
+<pre><code>&lt;Location /sse&gt;
+ProxyPass http://localhost:8888
+   &lt;/Location&gt;
+</code></pre><p>如果是nginx:</p>
+<pre><code>    location /sse/ {
+    rewrite                 ^(.*)$ / break; # to root of our tornado
+    proxy_buffering         off; # to push immediately
+    proxy_pass              http://127.0.0.1:8888;
+}
+</code></pre><p>最后启动：</p>
+<ol>
+<li>redis: nohup redis-server &amp;</li>
+<li>django:python manage.py runserver</li>
+<li>python server.py (服务端可以用supervisord控制tornado服务)</li>
+</ol>
+<h4 id="u8865_u5145"><a href="#u8865_u5145" class="headerlink" title="补充"></a>补充</h4><p>因为项目原先采用RabbitMQ来做信息分发、Celery任务执行，不过因为时间不够，只能临时先用redis顶着。 如果是RabbitMQ，就需要用Pika来实现具体<a href="http://pika.readthedocs.org/en/latest/examples/tornado_consumer.html" target="_blank" rel="external">参考</a>    </p>
+<p>以上也只利用SSE获取通知，并有深入的处理信息和按频道分发——后面会增加按团队来分发通知的功能。Tornado-sse的源码很短，各位可以细细读读，机制和Websocket的实现是类似的，基于事件嘛。</p>
+
+    
+  </div>
+</article>
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal-one" aria-hidden="true">
+  <a href="#close" class="cover" aria-hidden="true"></a>
+  <div class="modal-dialog">
+    <div class="modal-header">
+      <a href="#close" class="btn-close" aria-hidden="true">关闭</a>
+    </div>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'llloff';
+    
+    var disqus_url = 'http://lifeofszh.cn/2014/06/16/django realtime by redis tornado sse/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+
+    
+
+
+
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/fastclick.js', function() {
+      loadScript('/js/app.js', function() {
+        // load success
+      });
+    });
+  }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Php的gbk与Python的utf8处理 | Mark Shang</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="php,python," />
+  
+
+  <meta name="description" content="客户端（discuz的插件）由于采用gbk或gb2312编码，导致json_encode无法正常将字符转为json格式，即中文字符显示为空。
+All string data must be UTF-8 encoded.
+所以就有两个思路，一是将信息转为utf8再json化，二是将信息urlencode一下，再json化。偷懒，直接谷歌找到第二种方式的实现
+function arrayRecursi">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Php的gbk与Python的utf8处理">
+<meta property="og:url" content="http://lifeofszh.cn/2014/05/27/deal with php gbk and python utf8/index.html">
+<meta property="og:site_name" content="Mark Shang">
+<meta property="og:description" content="客户端（discuz的插件）由于采用gbk或gb2312编码，导致json_encode无法正常将字符转为json格式，即中文字符显示为空。
+All string data must be UTF-8 encoded.
+所以就有两个思路，一是将信息转为utf8再json化，二是将信息urlencode一下，再json化。偷懒，直接谷歌找到第二种方式的实现
+function arrayRecursi">
+<meta property="og:updated_time" content="2016-03-14T02:54:55.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Php的gbk与Python的utf8处理">
+<meta name="twitter:description" content="客户端（discuz的插件）由于采用gbk或gb2312编码，导致json_encode无法正常将字符转为json格式，即中文字符显示为空。
+All string data must be UTF-8 encoded.
+所以就有两个思路，一是将信息转为utf8再json化，二是将信息urlencode一下，再json化。偷懒，直接谷歌找到第二种方式的实现
+function arrayRecursi">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  
+
+  <link href="/css/styles.css?v=ed12202f" rel="stylesheet">
+
+  
+
+  
+
+</head>
+
+<body>
+
+  
+    <a href="#modal-one" class="toolbox-mobile">盒子</a>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a 
+            class="CIRCLE" 
+            href="/archives/"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a 
+            class="CIRCLE" 
+            href="/tag/"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a 
+            class="CIRCLE" 
+            href="/about/"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-deal with php gbk and python utf8" class="article article-type-post" itemscope itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">Php的gbk与Python的utf8处理</h1>
+
+    <div class="article-meta">
+      <span>2014-05-27</span>
+
+      <span> | </span>
+
+      <span class="article-author">Mark</span>
+
+      <span> | </span>
+
+      
+
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p>客户端（discuz的插件）由于采用gbk或gb2312编码，导致json_encode无法正常将字符转为json格式，即中文字符显示为空。</p>
+<pre><code>All string data must be UTF-8 encoded.
+</code></pre><p>所以就有两个思路，一是将信息转为utf8再json化，二是将信息urlencode一下，再json化。偷懒，直接谷歌找到第二种方式的实现</p>
+<pre><code>function arrayRecursive(&amp;$array, $function, $apply_to_keys_also = false)
+    {
+        foreach ($array as $key =&gt; $value) {
+            if (is_array($value)) {
+                arrayRecursive($array[$key], $function, $apply_to_keys_also);
+            } else {
+                $array[$key] = $function($value);
+            }
+
+            if ($apply_to_keys_also &amp;&amp; is_string($key)) {
+                $new_key = $function($key);
+                if ($new_key != $key) {
+                    $array[$new_key] = $array[$key];
+                    unset($array[$key]);
+                }
+            }
+        }
+    }
+
+function var_json_encode($var) {
+    $_var = $this-&gt;arrayRecursive($var, &apos;urlencode&apos;, false);
+    $_str = json_encode($var);
+    return $_str;
+}
+</code></pre><p>服务端Django接收到信息后，将做json_decode，但识别出来的是一堆乱码，百思不得其解。</p>
+<pre><code>urldecode_data = urllib.unquote(v)
+</code></pre><p>查了很久<a href="http://stackoverflow.com/questions/5139249/python-url-unquote-unicode" target="_blank" rel="external">资料</a>，才发现，原来此时的v是unicode，直接拿来decode(‘utf8’)或者’gbk’ 要么乱码要么报错</p>
+<p>正确地做法应该是</p>
+<pre><code>urldecode_data = urllib.unquote(str(v))
+</code></pre><p>在Django写入db时，如果字典的key是unicode，也会报错，所以这里也需要注意。</p>
+<p>附上python端的转码代码：</p>
+<pre><code>def urldecode_to(dict_data):
+new = {}
+for k, v in dict_data.items():
+    urldecode_data = urllib.unquote(str(v))
+    try:
+        unicode_data = unicode(urldecode_data, &apos;utf-8&apos;)
+    except Exception, e:
+        print &quot;error in urldecode_data encode utf8&quot;
+        try:
+            unicode_data = unicode(urldecode_data, &apos;gbk&apos;)
+        except Exception, e:
+            print &quot;error in urldecode_data encode GB2312&quot;
+            raise e
+    new[str(k)] = unicode_data
+return new
+</code></pre>
+    
+  </div>
+</article>
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal-one" aria-hidden="true">
+  <a href="#close" class="cover" aria-hidden="true"></a>
+  <div class="modal-dialog">
+    <div class="modal-header">
+      <a href="#close" class="btn-close" aria-hidden="true">关闭</a>
+    </div>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'llloff';
+    
+    var disqus_url = 'http://lifeofszh.cn/2014/05/27/deal with php gbk and python utf8/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+
+    
+
+
+
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/fastclick.js', function() {
+      loadScript('/js/app.js', function() {
+        // load success
+      });
+    });
+  }
+</script>
+
+</body>
+</html>

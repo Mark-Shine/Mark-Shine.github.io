@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>随笔 | Mark Shang</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="Mark Shang,后端,系统设计,Python, Django, Celery, Redis" />
+  
+
+  <meta name="description" content="前些天，把手机重置了。结果今天坐班车回来时，找不到以往惯用的新闻软件，百无聊赖下拿起新近才装的ONE。翻开一看，题目是《孤独患者》，作者：陶立夏
+原是一篇短文小说，剧情深入，作者的巧妙构思也逐渐成型。击节之余也感慨于文中流露的爱，幽幽暗暗，缱绻在女主身边。又像是蒙着一层纱，虽能看出里面大概的爱意，却硬是不戳破。让读者替男猪脚焦虑万分——“哎呀，傻小子，还不快挑明了说！”  
+最后结尾留白许多，男女">
+<meta property="og:type" content="article">
+<meta property="og:title" content="随笔">
+<meta property="og:url" content="http://lifeofszh.cn/2014/01/14/140114-100900_/index.html">
+<meta property="og:site_name" content="Mark Shang">
+<meta property="og:description" content="前些天，把手机重置了。结果今天坐班车回来时，找不到以往惯用的新闻软件，百无聊赖下拿起新近才装的ONE。翻开一看，题目是《孤独患者》，作者：陶立夏
+原是一篇短文小说，剧情深入，作者的巧妙构思也逐渐成型。击节之余也感慨于文中流露的爱，幽幽暗暗，缱绻在女主身边。又像是蒙着一层纱，虽能看出里面大概的爱意，却硬是不戳破。让读者替男猪脚焦虑万分——“哎呀，傻小子，还不快挑明了说！”  
+最后结尾留白许多，男女">
+<meta property="og:updated_time" content="2016-03-14T02:31:51.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="随笔">
+<meta name="twitter:description" content="前些天，把手机重置了。结果今天坐班车回来时，找不到以往惯用的新闻软件，百无聊赖下拿起新近才装的ONE。翻开一看，题目是《孤独患者》，作者：陶立夏
+原是一篇短文小说，剧情深入，作者的巧妙构思也逐渐成型。击节之余也感慨于文中流露的爱，幽幽暗暗，缱绻在女主身边。又像是蒙着一层纱，虽能看出里面大概的爱意，却硬是不戳破。让读者替男猪脚焦虑万分——“哎呀，傻小子，还不快挑明了说！”  
+最后结尾留白许多，男女">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  
+
+  <link href="/css/styles.css?v=ed12202f" rel="stylesheet">
+
+  
+
+  
+
+</head>
+
+<body>
+
+  
+    <a href="#modal-one" class="toolbox-mobile">盒子</a>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a 
+            class="CIRCLE" 
+            href="/archives/"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a 
+            class="CIRCLE" 
+            href="/tag/"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a 
+            class="CIRCLE" 
+            href="/about/"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-140114-100900_" class="article article-type-post" itemscope itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">随笔</h1>
+
+    <div class="article-meta">
+      <span>2014-01-14</span>
+
+      <span> | </span>
+
+      <span class="article-author">Mark</span>
+
+      <span> | </span>
+
+      
+
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p>前些天，把手机重置了。结果今天坐班车回来时，找不到以往惯用的新闻软件，百无聊赖下拿起新近才装的ONE。翻开一看，题目是《孤独患者》，作者：陶立夏</p>
+<p>原是一篇短文小说，剧情深入，作者的巧妙构思也逐渐成型。击节之余也感慨于文中流露的爱，幽幽暗暗，缱绻在女主身边。又像是蒙着一层纱，虽能看出里面大概的爱意，却硬是不戳破。让读者替男猪脚焦虑万分——“哎呀，傻小子，还不快挑明了说！”  </p>
+<p>最后结尾留白许多，男女重逢，一句：“你，是猪吗？”， 落幕。乐观的读者定然在此时放下手中读物，长抒一口。</p>
+<p>陶先生似乎想告诉我们：生活是美好的！那些你现在厌恶着的人，和你也许中间有一些美丽的误会——因为种种原因，在当时不能够直说？</p>
+<p>送上一句：卿，生日快乐！但愿我们的前嫌将来可以冰释</p>
+
+    
+  </div>
+</article>
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal-one" aria-hidden="true">
+  <a href="#close" class="cover" aria-hidden="true"></a>
+  <div class="modal-dialog">
+    <div class="modal-header">
+      <a href="#close" class="btn-close" aria-hidden="true">关闭</a>
+    </div>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'llloff';
+    
+    var disqus_url = 'http://lifeofszh.cn/2014/01/14/140114-100900_/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+
+    
+
+
+
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/fastclick.js', function() {
+      loadScript('/js/app.js', function() {
+        // load success
+      });
+    });
+  }
+</script>
+
+</body>
+</html>

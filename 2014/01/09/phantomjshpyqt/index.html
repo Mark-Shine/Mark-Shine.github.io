@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>截屏网页字体设置--phantomjsh或pyQt | Mark Shang</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="Mark Shang,后端,系统设计,Python, Django, Celery, Redis" />
+  
+
+  <meta name="description" content="脚本会用系统的默认字体截屏，所以我们需要设置系统的。
+
+Hi,
+After having the same issue, I managed to have phantomjs work with the default set of web fonts[1] on Ubuntu 10.04.
+First I installed these package to remove the errors">
+<meta property="og:type" content="article">
+<meta property="og:title" content="截屏网页字体设置--phantomjsh或pyQt">
+<meta property="og:url" content="http://lifeofszh.cn/2014/01/09/phantomjshpyqt/index.html">
+<meta property="og:site_name" content="Mark Shang">
+<meta property="og:description" content="脚本会用系统的默认字体截屏，所以我们需要设置系统的。
+
+Hi,
+After having the same issue, I managed to have phantomjs work with the default set of web fonts[1] on Ubuntu 10.04.
+First I installed these package to remove the errors">
+<meta property="og:updated_time" content="2016-03-14T02:30:44.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="截屏网页字体设置--phantomjsh或pyQt">
+<meta name="twitter:description" content="脚本会用系统的默认字体截屏，所以我们需要设置系统的。
+
+Hi,
+After having the same issue, I managed to have phantomjs work with the default set of web fonts[1] on Ubuntu 10.04.
+First I installed these package to remove the errors">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  
+
+  <link href="/css/styles.css?v=ed12202f" rel="stylesheet">
+
+  
+
+  
+
+</head>
+
+<body>
+
+  
+    <a href="#modal-one" class="toolbox-mobile">盒子</a>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a 
+            class="CIRCLE" 
+            href="/archives/"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a 
+            class="CIRCLE" 
+            href="/tag/"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a 
+            class="CIRCLE" 
+            href="/about/"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-phantomjshpyqt" class="article article-type-post" itemscope itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">截屏网页字体设置--phantomjsh或pyQt</h1>
+
+    <div class="article-meta">
+      <span>2014-01-09</span>
+
+      <span> | </span>
+
+      <span class="article-author">Mark</span>
+
+      <span> | </span>
+
+      
+
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p>脚本会用系统的默认字体截屏，所以我们需要设置系统的。</p>
+<blockquote>
+<p>Hi,</p>
+<p>After having the same issue, I managed to have phantomjs work with the default set of web fonts[1] on Ubuntu 10.04.</p>
+<p>First I installed these package to remove the errors that I was getting from Xvfb (run it without &gt; dev/null to see the errors on stdout):<br>    sudo aptitude install xfonts-100dpi xfonts-75dpi xfonts-scalable xfonts-cyrillic</p>
+<p>Then I added the multiverse repos and installed:<br>    sudo apt-get install ttf-mscorefonts-installer</p>
+<p>After that you have to clean the font cache:<br>    sudo fc-cache -f -v</p>
+<p>And here is the Xvfb options that worked for me:<br>    Xvfb :1 -screen 0 800x600x24 -extension GLX &gt; /dev/null 2&gt;&amp;1 &amp;</p>
+<p>export DISPLAY=localhost:1.0</p>
+<p>Hope it helps,</p>
+<p>Tiago</p>
+</blockquote>
+<p><a href="https://groups.google.com/forum/?fromgroups=#!searchin/phantomjs/font/phantomjs/aVDqzv99G5M/NFmHk7fAZB8J" target="_blank" rel="external">参考链接</a> </p>
+
+    
+  </div>
+</article>
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal-one" aria-hidden="true">
+  <a href="#close" class="cover" aria-hidden="true"></a>
+  <div class="modal-dialog">
+    <div class="modal-header">
+      <a href="#close" class="btn-close" aria-hidden="true">关闭</a>
+    </div>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'llloff';
+    
+    var disqus_url = 'http://lifeofszh.cn/2014/01/09/phantomjshpyqt/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+
+    
+
+
+
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/fastclick.js', function() {
+      loadScript('/js/app.js', function() {
+        // load success
+      });
+    });
+  }
+</script>
+
+</body>
+</html>

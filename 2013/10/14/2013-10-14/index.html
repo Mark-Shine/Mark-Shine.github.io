@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>2013-10-14 | Mark Shang</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="Mark Shang,后端,系统设计,Python, Django, Celery, Redis" />
+  
+
+  <meta name="description" content="创建多个ssh id for Mac OSX, GitBash, and Linux因为业务需要，不得不考虑用多个id连接服务器，在此考虑这个教程
+1. ssh-keygen -f ~/.ssh/personalid -C &amp;quot;personalid
+2. vim ~/.ssh/config
+3. Host workdid
+   HostName bitbucket.org
+   Ident">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2013-10-14">
+<meta property="og:url" content="http://lifeofszh.cn/2013/10/14/2013-10-14/index.html">
+<meta property="og:site_name" content="Mark Shang">
+<meta property="og:description" content="创建多个ssh id for Mac OSX, GitBash, and Linux因为业务需要，不得不考虑用多个id连接服务器，在此考虑这个教程
+1. ssh-keygen -f ~/.ssh/personalid -C &amp;quot;personalid
+2. vim ~/.ssh/config
+3. Host workdid
+   HostName bitbucket.org
+   Ident">
+<meta property="og:updated_time" content="2016-03-14T02:25:55.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="2013-10-14">
+<meta name="twitter:description" content="创建多个ssh id for Mac OSX, GitBash, and Linux因为业务需要，不得不考虑用多个id连接服务器，在此考虑这个教程
+1. ssh-keygen -f ~/.ssh/personalid -C &amp;quot;personalid
+2. vim ~/.ssh/config
+3. Host workdid
+   HostName bitbucket.org
+   Ident">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  
+
+  <link href="/css/styles.css?v=ed12202f" rel="stylesheet">
+
+  
+
+  
+
+</head>
+
+<body>
+
+  
+    <a href="#modal-one" class="toolbox-mobile">盒子</a>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a 
+            class="CIRCLE" 
+            href="/archives/"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a 
+            class="CIRCLE" 
+            href="/tag/"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a 
+            class="CIRCLE" 
+            href="/about/"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#u521B_u5EFA_u591A_u4E2Assh_id_for_Mac_OSX_2C_GitBash_2C_and_Linux"><span class="toc-text">创建多个ssh id for Mac OSX, GitBash, and Linux</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#u5176_u4ED6"><span class="toc-text">其他</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-2013-10-14" class="article article-type-post" itemscope itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">2013-10-14</h1>
+
+    <div class="article-meta">
+      <span>2013-10-14</span>
+
+      <span> | </span>
+
+      <span class="article-author">Mark</span>
+
+      <span> | </span>
+
+      
+
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h3 id="u521B_u5EFA_u591A_u4E2Assh_id_for_Mac_OSX_2C_GitBash_2C_and_Linux"><a href="#u521B_u5EFA_u591A_u4E2Assh_id_for_Mac_OSX_2C_GitBash_2C_and_Linux" class="headerlink" title="创建多个ssh id for Mac OSX, GitBash, and Linux"></a>创建多个ssh id for Mac OSX, GitBash, and Linux</h3><p>因为业务需要，不得不考虑用多个id连接服务器，在此考虑这个<a href="https://confluence.atlassian.com/pages/viewpage.action?pageId=271943168" target="_blank" rel="external">教程</a></p>
+<pre><code>1. ssh-keygen -f ~/.ssh/personalid -C &quot;personalid
+2. vim ~/.ssh/config
+3. Host workdid
+   HostName bitbucket.org
+   IdentityFile ~/.ssh/workdid
+   Host personalid
+   HostName bitbucket.org
+   IdentityFile ~/.ssh/personalid
+</code></pre><p>完毕</p>
+<h3 id="u5176_u4ED6"><a href="#u5176_u4ED6" class="headerlink" title="其他"></a>其他</h3><p>从维修点，拿回更换了ssd的air<br>安妮耳朵坏了，医生说修一下要2500＋<br>带安妮看完医生，回家路上，女朋友的手机落在租车上<br>最近睡不好，梦到故人</p>
+
+    
+  </div>
+</article>
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal-one" aria-hidden="true">
+  <a href="#close" class="cover" aria-hidden="true"></a>
+  <div class="modal-dialog">
+    <div class="modal-header">
+      <a href="#close" class="btn-close" aria-hidden="true">关闭</a>
+    </div>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'llloff';
+    
+    var disqus_url = 'http://lifeofszh.cn/2013/10/14/2013-10-14/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+
+    
+
+
+
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/fastclick.js', function() {
+      loadScript('/js/app.js', function() {
+        // load success
+      });
+    });
+  }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>vim 编辑远程文件 | Mark Shang</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="Mark Shang,后端,系统设计,Python, Django, Celery, Redis" />
+  
+
+  <meta name="description" content="scp -r -P 3389 ada@ued.etao.net:/path1/  ~/Download/path2/
+上面这个命令，用来从远程端拷贝文件到本地路径，如果没有加过ids_pub，则需要-c 输入密码了
+那么如何用vim打开远程端的文件呢？一般的思路是：
+
+从远程拷贝文件到到本地
+修改
+上传回远程端
+
+如果vim 能够直接打开scp的文件就好了
+vim scp://ada@ued.et">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vim 编辑远程文件">
+<meta property="og:url" content="http://lifeofszh.cn/2013/09/24/vim edit remotely/index.html">
+<meta property="og:site_name" content="Mark Shang">
+<meta property="og:description" content="scp -r -P 3389 ada@ued.etao.net:/path1/  ~/Download/path2/
+上面这个命令，用来从远程端拷贝文件到本地路径，如果没有加过ids_pub，则需要-c 输入密码了
+那么如何用vim打开远程端的文件呢？一般的思路是：
+
+从远程拷贝文件到到本地
+修改
+上传回远程端
+
+如果vim 能够直接打开scp的文件就好了
+vim scp://ada@ued.et">
+<meta property="og:updated_time" content="2016-03-14T02:54:14.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="vim 编辑远程文件">
+<meta name="twitter:description" content="scp -r -P 3389 ada@ued.etao.net:/path1/  ~/Download/path2/
+上面这个命令，用来从远程端拷贝文件到本地路径，如果没有加过ids_pub，则需要-c 输入密码了
+那么如何用vim打开远程端的文件呢？一般的思路是：
+
+从远程拷贝文件到到本地
+修改
+上传回远程端
+
+如果vim 能够直接打开scp的文件就好了
+vim scp://ada@ued.et">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  
+
+  <link href="/css/styles.css?v=ed12202f" rel="stylesheet">
+
+  
+
+  
+
+</head>
+
+<body>
+
+  
+    <a href="#modal-one" class="toolbox-mobile">盒子</a>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a 
+            class="CIRCLE" 
+            href="/archives/"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a 
+            class="CIRCLE" 
+            href="/tag/"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a 
+            class="CIRCLE" 
+            href="/about/"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-vim edit remotely" class="article article-type-post" itemscope itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">vim 编辑远程文件</h1>
+
+    <div class="article-meta">
+      <span>2013-09-24</span>
+
+      <span> | </span>
+
+      <span class="article-author">Mark</span>
+
+      <span> | </span>
+
+      
+
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <pre><code>scp -r -P 3389 ada@ued.etao.net:/path1/  ~/Download/path2/
+</code></pre><p>上面这个命令，用来从远程端拷贝文件到本地路径，如果没有加过ids_pub，则需要-c 输入密码了</p>
+<p>那么如何用vim打开远程端的文件呢？<br>一般的思路是：</p>
+<ol>
+<li>从远程拷贝文件到到本地</li>
+<li>修改</li>
+<li>上传回远程端</li>
+</ol>
+<p>如果vim 能够直接打开scp的文件就好了</p>
+<pre><code>vim scp://ada@ued.etao.net/../../tgdemand/views.py
+</code></pre><p>还有一些同学对此做了扩展：<a href="http://jeetworks.org/node/102" target="_blank" rel="external">Editing Remote Files with Your Local Vim Using the SCP Protocol … with Bash Completion!</a></p>
+<p>最近在研究用pyqt做网页截屏…… 虽然在本地是能够截屏，但在那悲催的虚拟机里，尼玛就是不停出现segmention fault …… </p>
+
+    
+  </div>
+</article>
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal-one" aria-hidden="true">
+  <a href="#close" class="cover" aria-hidden="true"></a>
+  <div class="modal-dialog">
+    <div class="modal-header">
+      <a href="#close" class="btn-close" aria-hidden="true">关闭</a>
+    </div>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'llloff';
+    
+    var disqus_url = 'http://lifeofszh.cn/2013/09/24/vim edit remotely/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+
+    
+
+
+
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/fastclick.js', function() {
+      loadScript('/js/app.js', function() {
+        // load success
+      });
+    });
+  }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>How to cerate a theme for Mezzanine app | Mark Shang</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="Mark Shang,后端,系统设计,Python, Django, Celery, Redis" />
+  
+
+  <meta name="description" content="前面介绍了Mezzanine，在实战中，又该如何写自己的Theme而不修改Mezzaine。官方给出的说明是酱紫的Link，看完之后，你可能还是不知道咋整。
+不打紧，这里还有一篇老外写的操作实例，共计四篇，认真操作下来，一般就出师了。不过英文就是人家的东西，毕竟不如中文来得容易理解——英文差，实践中需要磕碰多次，反复研读博文。
+假设我们要修改blog的模板
+./manage.py startapp">
+<meta property="og:type" content="article">
+<meta property="og:title" content="How to cerate a theme for Mezzanine app">
+<meta property="og:url" content="http://lifeofszh.cn/2014/06/03/How to cerate a theme for Mezzanine app/index.html">
+<meta property="og:site_name" content="Mark Shang">
+<meta property="og:description" content="前面介绍了Mezzanine，在实战中，又该如何写自己的Theme而不修改Mezzaine。官方给出的说明是酱紫的Link，看完之后，你可能还是不知道咋整。
+不打紧，这里还有一篇老外写的操作实例，共计四篇，认真操作下来，一般就出师了。不过英文就是人家的东西，毕竟不如中文来得容易理解——英文差，实践中需要磕碰多次，反复研读博文。
+假设我们要修改blog的模板
+./manage.py startapp">
+<meta property="og:updated_time" content="2016-03-14T02:56:04.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="How to cerate a theme for Mezzanine app">
+<meta name="twitter:description" content="前面介绍了Mezzanine，在实战中，又该如何写自己的Theme而不修改Mezzaine。官方给出的说明是酱紫的Link，看完之后，你可能还是不知道咋整。
+不打紧，这里还有一篇老外写的操作实例，共计四篇，认真操作下来，一般就出师了。不过英文就是人家的东西，毕竟不如中文来得容易理解——英文差，实践中需要磕碰多次，反复研读博文。
+假设我们要修改blog的模板
+./manage.py startapp">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  
+
+  <link href="/css/styles.css?v=ed12202f" rel="stylesheet">
+
+  
+
+  
+
+</head>
+
+<body>
+
+  
+    <a href="#modal-one" class="toolbox-mobile">盒子</a>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a 
+            class="CIRCLE" 
+            href="/archives/"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a 
+            class="CIRCLE" 
+            href="/tag/"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a 
+            class="CIRCLE" 
+            href="/about/"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#u5047_u8BBE_u6211_u4EEC_u8981_u4FEE_u6539blog_u7684_u6A21_u677F"><span class="toc-text">假设我们要修改blog的模板</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#u5047_u8BBE_u6211_u8981_u7ED9_u535A_u5BA2_u6DFB_u52A0_u4E00_u4E2A_u53EF_u7F16_u8F91_u7684_u540E_u53F0_u5C5E_u6027_u2014_u2014slide"><span class="toc-text">假设我要给博客添加一个可编辑的后台属性——slide</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#OT-_u5199_u4E0D_u597D_u524D_u7AEF_u4EE3_u7801_u7684_u540E_u7AEF_u8BBE_u8BA1_u5E08_uFF0C_u4E0D_u662F_u597D_u7684_u4EA7_u54C1_u7ECF_u7406"><span class="toc-text">OT.写不好前端代码的后端设计师，不是好的产品经理</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-How to cerate a theme for Mezzanine app" class="article article-type-post" itemscope itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">How to cerate a theme for Mezzanine app</h1>
+
+    <div class="article-meta">
+      <span>2014-06-03</span>
+
+      <span> | </span>
+
+      <span class="article-author">Mark</span>
+
+      <span> | </span>
+
+      
+
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p>前面介绍了Mezzanine，在实战中，又该如何写自己的Theme而不修改Mezzaine。官方给出的说明是酱紫的<a href="http://mezzanine.jupo.org/docs/content-architecture.html" target="_blank" rel="external">Link</a>，看完之后，你可能还是不知道咋整。</p>
+<p>不打紧，这里还有一篇老外写的操作<a href="http://bitofpixels.com/blog/mezzatheming-creating-mezzanine-themes-part-1-basehtml/" target="_blank" rel="external">实例</a>，共计四篇，认真操作下来，一般就出师了。<br>不过英文就是人家的东西，毕竟不如中文来得容易理解——英文差，实践中需要磕碰多次，反复研读博文。</p>
+<h4 id="u5047_u8BBE_u6211_u4EEC_u8981_u4FEE_u6539blog_u7684_u6A21_u677F"><a href="#u5047_u8BBE_u6211_u4EEC_u8981_u4FEE_u6539blog_u7684_u6A21_u677F" class="headerlink" title="假设我们要修改blog的模板"></a>假设我们要修改blog的模板</h4><ol>
+<li>./manage.py startapp theme</li>
+<li>在setting.app中添加theme，次序在所有mezzanine前面</li>
+<li>由于Mz的默认模板结构是左中右三列的形式，但是我希望简洁的页面比如内容居中，那么这时就需要替换base.html文件了——不是修改源文件，而是在theme中新建一个templates文件夹，添加base.html。接着就是按自己喜欢的模式大刀阔斧修改文件。</li>
+<li>在theme.templates下新建blog文件夹，添加blog_post_detail.html——文件名必须与源模板文件相同，因为blog的view函数是默认查找这个文件的。我在上一步中，添加了{ block main_contain }，所以现在可以在blog_post_detail.html中覆盖{ block main_contain }内容，这样你的博客模板内容就定制好叻。</li>
+</ol>
+<h4 id="u5047_u8BBE_u6211_u8981_u7ED9_u535A_u5BA2_u6DFB_u52A0_u4E00_u4E2A_u53EF_u7F16_u8F91_u7684_u540E_u53F0_u5C5E_u6027_u2014_u2014slide"><a href="#u5047_u8BBE_u6211_u8981_u7ED9_u535A_u5BA2_u6DFB_u52A0_u4E00_u4E2A_u53EF_u7F16_u8F91_u7684_u540E_u53F0_u5C5E_u6027_u2014_u2014slide" class="headerlink" title="假设我要给博客添加一个可编辑的后台属性——slide"></a>假设我要给博客添加一个可编辑的后台属性——slide</h4><ul>
+<li><p>在theme中新建一个models.py:</p>
+<pre><code>from mezzanine.blog.models import BlogPost
+
+class Slide(Orderable)：
+    myblog = models.ForeignKey(BlogPost, related_name=&quot;slides&quot;)
+    image = FileField(verbose_name=_(&quot;Image&quot;),upload_to=upload_to(&quot;theme.Slide.image&quot;, &quot;slider&quot;),format=&quot;Image&quot;, max_length=255, null=True, blank=True)
+</code></pre></li>
+<li><p>同时，还需要在后台添加面板，你才能操作。新建theme.admin：</p>
+<pre><code>from .models import  Slide
+from mezzanine.core.admin import TabularDynamicInlineAdmin, BaseDynamicInlineAdmin
+from mezzanine.blog.admin import BlogPostAdmin 
+from mezzanine.blog.models import BlogPost
+
+class SlideInline(TabularDynamicInlineAdmin):
+        model = Slide
+
+class MyBlogPostAdmin(BlogPostAdmin):
+    inlines = (SlideInline,)
+
+admin.site.register(BlogPost, MyBlogPostAdmin)
+</code></pre></li>
+</ul>
+<p>TabularDynamicInlineAdmin，是集成django的TabularInlineAdmin，主要为页面内编辑提供模板。运行后，即可在后台博客中见到一个Slide行，可以添加多个图片。</p>
+<ul>
+<li><p>最后自然是在模板中，添加元素了。</p>
+<pre><code>{ for slide in blogpost.slide.all }
+    slide html
+{ endfor }
+</code></pre></li>
+</ul>
+<p>写的有些简略，大致的思路和方向是这样的，我也是在做的过程中，慢慢摸索。欢迎大家指正，一起讨论。</p>
+<h4 id="OT-_u5199_u4E0D_u597D_u524D_u7AEF_u4EE3_u7801_u7684_u540E_u7AEF_u8BBE_u8BA1_u5E08_uFF0C_u4E0D_u662F_u597D_u7684_u4EA7_u54C1_u7ECF_u7406"><a href="#OT-_u5199_u4E0D_u597D_u524D_u7AEF_u4EE3_u7801_u7684_u540E_u7AEF_u8BBE_u8BA1_u5E08_uFF0C_u4E0D_u662F_u597D_u7684_u4EA7_u54C1_u7ECF_u7406" class="headerlink" title="OT.写不好前端代码的后端设计师，不是好的产品经理"></a>OT.写不好前端代码的后端设计师，不是好的产品经理</h4><p>前端代码，真的很让人闹心啊！但是一个产品的心，又让我觉得自己做的页面，实在是惨不忍睹，无奈让身怀六甲的老婆替我写了部分前端页面。虽然达不到完美，却也离满意更近了一步。有时候确实是希望自己能更加专心，更加聪明，能够三头六臂。</p>
+
+    
+  </div>
+</article>
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal-one" aria-hidden="true">
+  <a href="#close" class="cover" aria-hidden="true"></a>
+  <div class="modal-dialog">
+    <div class="modal-header">
+      <a href="#close" class="btn-close" aria-hidden="true">关闭</a>
+    </div>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'llloff';
+    
+    var disqus_url = 'http://lifeofszh.cn/2014/06/03/How to cerate a theme for Mezzanine app/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+
+    
+
+
+
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/fastclick.js', function() {
+      loadScript('/js/app.js', function() {
+        // load success
+      });
+    });
+  }
+</script>
+
+</body>
+</html>

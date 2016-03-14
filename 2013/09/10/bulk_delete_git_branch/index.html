@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>批量删除git分支 | Mark Shang</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="git,linux," />
+  
+
+  <meta name="description" content="本地和远程创建了太多的git分支，每次清理都需要敲大量命令——相当枯燥，关键效率还很低，于是就写了下面两条命令执行本地和远程分支的删除
+初级魔法：  要删除本地，首先要考虑以下三点
+
+列出所有本地分支   
+搜索目标分支如：所有含有‘dev’的分支
+将搜索出的结果传给删除函数
+
+所以我们可以得到：
+git br |grep &amp;apos;dev&amp;apos; |xargs git br -d
+管道">
+<meta property="og:type" content="article">
+<meta property="og:title" content="批量删除git分支">
+<meta property="og:url" content="http://lifeofszh.cn/2013/09/10/bulk_delete_git_branch/index.html">
+<meta property="og:site_name" content="Mark Shang">
+<meta property="og:description" content="本地和远程创建了太多的git分支，每次清理都需要敲大量命令——相当枯燥，关键效率还很低，于是就写了下面两条命令执行本地和远程分支的删除
+初级魔法：  要删除本地，首先要考虑以下三点
+
+列出所有本地分支   
+搜索目标分支如：所有含有‘dev’的分支
+将搜索出的结果传给删除函数
+
+所以我们可以得到：
+git br |grep &amp;apos;dev&amp;apos; |xargs git br -d
+管道">
+<meta property="og:updated_time" content="2016-03-14T02:48:42.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="批量删除git分支">
+<meta name="twitter:description" content="本地和远程创建了太多的git分支，每次清理都需要敲大量命令——相当枯燥，关键效率还很低，于是就写了下面两条命令执行本地和远程分支的删除
+初级魔法：  要删除本地，首先要考虑以下三点
+
+列出所有本地分支   
+搜索目标分支如：所有含有‘dev’的分支
+将搜索出的结果传给删除函数
+
+所以我们可以得到：
+git br |grep &amp;apos;dev&amp;apos; |xargs git br -d
+管道">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  
+
+  <link href="/css/styles.css?v=ed12202f" rel="stylesheet">
+
+  
+
+  
+
+</head>
+
+<body>
+
+  
+    <a href="#modal-one" class="toolbox-mobile">盒子</a>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a 
+            class="CIRCLE" 
+            href="/archives/"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a 
+            class="CIRCLE" 
+            href="/tag/"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a 
+            class="CIRCLE" 
+            href="/about/"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#u521D_u7EA7_u9B54_u6CD5_uFF1A"><span class="toc-text">初级魔法：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#u7BA1_u9053"><span class="toc-text">管道</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#grep"><span class="toc-text">grep</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#xargs"><span class="toc-text">xargs</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#u9AD8_u7EA7_u9B54_u6CD5_uFF1A"><span class="toc-text">高级魔法：</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#awk"><span class="toc-text">awk</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-bulk_delete_git_branch" class="article article-type-post" itemscope itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">批量删除git分支</h1>
+
+    <div class="article-meta">
+      <span>2013-09-10</span>
+
+      <span> | </span>
+
+      <span class="article-author">Mark</span>
+
+      <span> | </span>
+
+      
+
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p>  本地和远程创建了太多的git分支，每次清理都需要敲大量命令——相当枯燥，关键效率还很低，于是就写了下面两条命令执行本地和远程分支的删除</p>
+<h4 id="u521D_u7EA7_u9B54_u6CD5_uFF1A"><a href="#u521D_u7EA7_u9B54_u6CD5_uFF1A" class="headerlink" title="初级魔法："></a>初级魔法：</h4><p>  要删除本地，首先要考虑以下三点</p>
+<ul>
+<li>列出所有本地分支   </li>
+<li>搜索目标分支如：所有含有‘dev’的分支</li>
+<li>将搜索出的结果传给删除函数</li>
+</ul>
+<p>所以我们可以得到：</p>
+<pre><code>git br |grep &apos;dev&apos; |xargs git br -d
+</code></pre><h4 id="u7BA1_u9053"><a href="#u7BA1_u9053" class="headerlink" title="管道"></a>管道</h4><p>  频繁用于命令间的通信，比如此处可以将<code>git br</code>的结果传递给<code>grep &#39;dev&#39;</code>，其用法也是相当简单只要’|’连接两个命令即可<br>  还有类似 <code>ps -ef | grep &#39;uwsgi&#39;</code>的命令组合查找uwsgi的进城</p>
+<h4 id="grep"><a href="#grep" class="headerlink" title="grep"></a>grep</h4><p> grep 可以用于在文件或流中查找匹配的结果，如grep ‘abc’ <em>*/\</em>*.py查找当前目录下全部含有’abc’字符串的文件 并打印出结果</p>
+<h4 id="xargs"><a href="#xargs" class="headerlink" title="xargs"></a>xargs</h4><p>  将前命令的执行结果作为参数传递给后一条命令。此处，我们是将所有含’dev’字符的分支名传递给<code>git br -d</code></p>
+<h3 id="u9AD8_u7EA7_u9B54_u6CD5_uFF1A"><a href="#u9AD8_u7EA7_u9B54_u6CD5_uFF1A" class="headerlink" title="高级魔法："></a>高级魔法：</h3><p>  删除远程分支git命令是：<code>git push origin :dev</code>相当于push一个空的分支覆盖远程分支<br>  那么远程能否参考本地删除来做呢？——大体方向是对，不就是获得分支名，传给删除函数执行嘛</p>
+<pre><code>git br -r| grep &apos;dev&apos; |xargs git push origin :
+</code></pre><p>  但执行结果显然和我的预期不符，系统最后执行的命令类似于这样：</p>
+<pre><code>git push origin origin/dev/fix:
+</code></pre><p>  显然 xargs 是将参数传到了:的前一位，而不是我们预期的后一位。解决的办法是？</p>
+<pre><code>xargs -i {} func  :{}
+</code></pre><p>  用 {} 表示传递过来的参数填充的位置<br>  于是我们有了:</p>
+<pre><code>git br -r | grep &apos;dev&apos; | xargs -i {} git push origin :{}
+</code></pre><p>  大功告成？——自然没有。系统执行是：<code>git push origin :origin/dev/fix</code><br>  原来grep出来的结果虽然是我们需要的分支，但它包含了origin，显然git 命令不会那么聪明的识别到<br>  所以我们只能再辛苦点把前面的origin去掉咯。找了蛮久，满足要求的命令有sed 和awk，此处就先试试awk吧</p>
+<h4 id="awk"><a href="#awk" class="headerlink" title="awk"></a>awk</h4><p>  awk可谓上古神器也。其用法，都能写一本书啦……因为语法复杂，花了一点临时学了下。我们的目的很简单删掉origin，下面就看看怎么用牛刀来杀鸡<br>  <code>awk -F &#39;[/]&#39; &#39;/1\/master/ {printf &quot;%s/%s/%s\n&quot;, $2,$3,$4}&#39;</code> -F，设定分隔符为/, 匹配所有1/master的分支名（注意转义/），格式化输出<code>origin/1/master/fix</code> 分割后$1就代表origin,$3代表master 以此类推。所以在printf中格式化输出</p>
+<p>好绕了那么多圈，现在终于可以把所有的拼在一起，然后痛快删掉远程那二十多个分支了</p>
+<pre><code>git br -r |awk -F &apos;[/]&apos; &apos;/1\/master/ {printf &quot;%s/%s/%s\n&quot;, $2,$3,$4}&apos; |xargs -I {} git push origin :{}
+</code></pre><p>注：br 是branch的缩写</p>
+
+    
+  </div>
+</article>
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal-one" aria-hidden="true">
+  <a href="#close" class="cover" aria-hidden="true"></a>
+  <div class="modal-dialog">
+    <div class="modal-header">
+      <a href="#close" class="btn-close" aria-hidden="true">关闭</a>
+    </div>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'llloff';
+    
+    var disqus_url = 'http://lifeofszh.cn/2013/09/10/bulk_delete_git_branch/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+
+    
+
+
+
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/fastclick.js', function() {
+      loadScript('/js/app.js', function() {
+        // load success
+      });
+    });
+  }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>运维三件套之supervisor | Mark Shang</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="Mark Shang,后端,系统设计,Python, Django, Celery, Redis" />
+  
+
+  <meta name="description" content="在小团队做Web开发，除了得是个后端代码熟练工外，还要懂前端，会运维。
+用supervisor监控tornado进程听很多人提到superviosr，翻了翻文档看着挺有用——至少不用自己写shell脚本了。自己摸索，如果是天才，可能一次就成功了；如果是人才，可能试几次就可以了；那像我那么笨得，就多走了好多弯路，像无法使用supervisorctl这类谷歌半天都找不到线索的问题，都碰到过。
+此处就不">
+<meta property="og:type" content="article">
+<meta property="og:title" content="运维三件套之supervisor">
+<meta property="og:url" content="http://lifeofszh.cn/2013/12/06/supervisor监控tornado进程/index.html">
+<meta property="og:site_name" content="Mark Shang">
+<meta property="og:description" content="在小团队做Web开发，除了得是个后端代码熟练工外，还要懂前端，会运维。
+用supervisor监控tornado进程听很多人提到superviosr，翻了翻文档看着挺有用——至少不用自己写shell脚本了。自己摸索，如果是天才，可能一次就成功了；如果是人才，可能试几次就可以了；那像我那么笨得，就多走了好多弯路，像无法使用supervisorctl这类谷歌半天都找不到线索的问题，都碰到过。
+此处就不">
+<meta property="og:updated_time" content="2016-03-14T02:53:59.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="运维三件套之supervisor">
+<meta name="twitter:description" content="在小团队做Web开发，除了得是个后端代码熟练工外，还要懂前端，会运维。
+用supervisor监控tornado进程听很多人提到superviosr，翻了翻文档看着挺有用——至少不用自己写shell脚本了。自己摸索，如果是天才，可能一次就成功了；如果是人才，可能试几次就可以了；那像我那么笨得，就多走了好多弯路，像无法使用supervisorctl这类谷歌半天都找不到线索的问题，都碰到过。
+此处就不">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  
+
+  <link href="/css/styles.css?v=ed12202f" rel="stylesheet">
+
+  
+
+  
+
+</head>
+
+<body>
+
+  
+    <a href="#modal-one" class="toolbox-mobile">盒子</a>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a 
+            class="CIRCLE" 
+            href="/archives/"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a 
+            class="CIRCLE" 
+            href="/tag/"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a 
+            class="CIRCLE" 
+            href="/about/"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#u7528supervisor_u76D1_u63A7tornado_u8FDB_u7A0B"><span class="toc-text">用supervisor监控tornado进程</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-supervisor监控tornado进程" class="article article-type-post" itemscope itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">运维三件套之supervisor</h1>
+
+    <div class="article-meta">
+      <span>2013-12-06</span>
+
+      <span> | </span>
+
+      <span class="article-author">Mark</span>
+
+      <span> | </span>
+
+      
+
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p>在小团队做Web开发，除了得是个后端代码熟练工外，还要懂前端，会运维。</p>
+<h4 id="u7528supervisor_u76D1_u63A7tornado_u8FDB_u7A0B"><a href="#u7528supervisor_u76D1_u63A7tornado_u8FDB_u7A0B" class="headerlink" title="用supervisor监控tornado进程"></a>用supervisor监控tornado进程</h4><p>听很多人提到superviosr，翻了翻文档看着挺有用——至少不用自己写shell脚本了。自己摸索，如果是天才，可能一次就成功了；如果是人才，可能试几次就可以了；那像我那么笨得，就多走了好多弯路，像无法使用supervisorctl这类谷歌半天都找不到线索的问题，都碰到过。</p>
+<p>此处就不赘述了，附上配置文件：</p>
+<pre><code>[unix_http_server]
+file=/tmp/supervisor.sock   ;必填
+
+[inet_http_server]    （控制页面设置）
+port=9001
+username = shiyi
+password = 88195929qq
+
+[rpcinterface:supervisor]     ; 必填
+supervisor.rpcinterface_factory =supervisor.rpcinterface:make_main_rpcinterface
+
+[supervisorctl]    ;设置控制台
+serverurl=unix:///tmp/supervisor.sock ; use a     unix:// URL  for a unix socket
+username=shiyi
+password=shiyi
+
+[supervisord]
+logfile_maxbytes=50MB                           ; maximum size of logfile before rotation
+logfile_backups=10                              ; number of backed up logfiles
+loglevel=error                                  ; info, debug, warn, trace
+pidfile=/home/wb-shangzhihai/usr/var/run/supervisord.pid                ; pidfile location
+nodaemon=false                                  ; run supervisord as a daemon
+minfds=1024                                     ; number of startup file descriptors
+minprocs=200                                    ; number of process descriptors
+user=wb-shangzhihai                                       ; default user
+childlogdir=/home/usersname/usr/logs/supervisord/               ; where child log files will live
+
+
+[program:webscan-8001]
+process_name=webscan1
+directory=/home/.../www/designshot/
+command=sh start.sh 8001    ;此处是你要执行的脚本
+stopsignal=KILL 
+killasgroup=true            
+stopasgroup=true             
+autostart=true                ; supervisord守护程序启动时自动启动tornado
+autorestart=true              ; supervisord守护程序重启时自动重启tornado
+redirect_stderr=true          ; 将stderr重定向到stdout
+stdout_logfile = ~/usr/logs/webscan.log
+
+[supervisorctl]
+username=shiyi
+password=shiyi
+</code></pre><p>如果你遇到supervisor，无法杀死tornado进程的问题，那么就要设置killasgroup, stopasgroup为True。 这两项可以让supervisor找到父进程产生的所以子进程。</p>
+<p><strong>启动</strong></p>
+<pre><code>supervisord -c xxx.conf
+</code></pre><p><strong>管理</strong></p>
+<pre><code>supervisorctl 
+
+进入后，可以help，提示命令
+</code></pre>
+    
+  </div>
+</article>
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal-one" aria-hidden="true">
+  <a href="#close" class="cover" aria-hidden="true"></a>
+  <div class="modal-dialog">
+    <div class="modal-header">
+      <a href="#close" class="btn-close" aria-hidden="true">关闭</a>
+    </div>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'llloff';
+    
+    var disqus_url = 'http://lifeofszh.cn/2013/12/06/supervisor监控tornado进程/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+
+    
+
+
+
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/fastclick.js', function() {
+      loadScript('/js/app.js', function() {
+        // load success
+      });
+    });
+  }
+</script>
+
+</body>
+</html>

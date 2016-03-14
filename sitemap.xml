@@ -2,6 +2,136 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://lifeofszh.cn/2014/06/03/How%20to%20cerate%20a%20theme%20for%20Mezzanine%20app/</loc>
+    <lastmod>2016-03-14T02:56:04.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://lifeofszh.cn/2014/05/27/deal%20with%20php%20gbk%20and%20python%20utf8/</loc>
+    <lastmod>2016-03-14T02:54:55.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://lifeofszh.cn/2013/09/24/vim%20edit%20remotely/</loc>
+    <lastmod>2016-03-14T02:54:14.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://lifeofszh.cn/2013/12/06/supervisor%E7%9B%91%E6%8E%A7tornado%E8%BF%9B%E7%A8%8B/</loc>
+    <lastmod>2016-03-14T02:53:59.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://lifeofszh.cn/2014/04/28/Run%20Django%20on%20Apache%20by%20uwsgi%20/</loc>
+    <lastmod>2016-03-14T02:53:25.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://lifeofszh.cn/2014/04/24/Php%20On%20Discuz%20addon%20develop%20/</loc>
+    <lastmod>2016-03-14T02:51:22.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://lifeofszh.cn/2013/11/16/webpage2png/</loc>
+    <lastmod>2016-03-14T02:50:17.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://lifeofszh.cn/2014/06/16/django%20realtime%20by%20redis%20tornado%20sse/</loc>
+    <lastmod>2016-03-14T02:49:11.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://lifeofszh.cn/2013/09/10/bulk_delete_git_branch/</loc>
+    <lastmod>2016-03-14T02:48:42.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://lifeofszh.cn/2013/11/03/Angular%E4%B9%8B%E5%88%9D%E4%BD%93%E9%AA%8C%20/</loc>
+    <lastmod>2016-03-14T02:47:36.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://lifeofszh.cn/2014/05/13/about%20stand%20anwser/</loc>
+    <lastmod>2016-03-14T02:46:27.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://lifeofszh.cn/2013/09/08/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%20Django%20ORM%20Query%20%E6%9C%BA%E5%88%B6/</loc>
+    <lastmod>2016-03-14T02:45:19.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://lifeofszh.cn/2014/07/15/about-reduce/</loc>
+    <lastmod>2016-03-14T02:43:35.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://lifeofszh.cn/2014/07/15/140715-100701_about-reduce/</loc>
+    <lastmod>2016-03-14T02:43:35.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://lifeofszh.cn/2014/07/03/%E5%BE%AE%E4%BF%A1%E6%8E%A5%E5%8F%A3%E8%AE%A1%E5%88%92%E6%90%81%E6%B5%85/</loc>
+    <lastmod>2016-03-14T02:41:14.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://lifeofszh.cn/2014/05/07/%E5%85%B3%E4%BA%8E%20Python%20%E7%94%A8%E6%88%B7%E5%AF%86%E7%A0%81%E5%AE%89%E5%85%A8/</loc>
+    <lastmod>2016-03-14T02:40:27.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://lifeofszh.cn/2014/07/03/140703-094425_/</loc>
+    <lastmod>2016-03-14T02:39:03.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://lifeofszh.cn/2014/06/12/django-signal-/</loc>
+    <lastmod>2016-03-14T02:37:42.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://lifeofszh.cn/2016/03/14/140612-092328_django-signal-/</loc>
+    <lastmod>2016-03-14T02:36:19.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://lifeofszh.cn/2014/04/19/djangos-url/</loc>
+    <lastmod>2016-03-14T02:35:20.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://lifeofszh.cn/2014/01/16/django-dynamic-query/</loc>
+    <lastmod>2016-03-14T02:32:26.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://lifeofszh.cn/2014/01/14/140114-100900_/</loc>
+    <lastmod>2016-03-14T02:31:51.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://lifeofszh.cn/2014/01/09/phantomjshpyqt/</loc>
+    <lastmod>2016-03-14T02:30:44.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://lifeofszh.cn/2013/10/14/2013-10-14/</loc>
+    <lastmod>2016-03-14T02:25:55.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://lifeofszh.cn/2016/03/14/python-/</loc>
+    <lastmod>2016-03-14T02:10:09.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://lifeofszh.cn/2014/01/21/wrist-friendly-dictionary/</loc>
+    <lastmod>2016-03-14T02:06:02.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://lifeofszh.cn/about/index.html</loc>
     <lastmod>2016-03-14T01:50:04.000Z</lastmod>
   </url>
@@ -9,21 +139,6 @@
   <url>
     <loc>http://lifeofszh.cn/tag/index.html</loc>
     <lastmod>2016-03-14T01:49:39.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://lifeofszh.cn/2016/02/06/this-is-a-test/</loc>
-    <lastmod>2016-02-06T02:19:46.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://lifeofszh.cn/2016/02/04/deploy/</loc>
-    <lastmod>2016-02-04T03:56:45.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://lifeofszh.cn/2016/02/04/hello-world/</loc>
-    <lastmod>2016-02-04T01:38:45.000Z</lastmod>
   </url>
   
 </urlset>

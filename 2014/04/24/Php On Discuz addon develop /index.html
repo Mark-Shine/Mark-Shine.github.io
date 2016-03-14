@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>关于 Discuz 插件的开发 | Mark Shang</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="php," />
+  
+
+  <meta name="description" content="第一次接触PHP, 我可以说怎么会有那么不好用的语言吗？ 不伦不类的，既不是C，又没有Python的简洁——Py粉吐槽完毕
+好吧，我的任务是写一个系统用于监控各个论坛的帖子内容，一旦有敏感词，就立马报警。经过一番讨论，打算采用方案一： 前端用DZ的插件形式发送数据到后台，后台负责审查、报警和设置。 至于方案二、三，以后再讨论是怎么pass的。
+今天要说的是我如何征服Discuz 插件的。另外我又要">
+<meta property="og:type" content="article">
+<meta property="og:title" content="关于 Discuz 插件的开发">
+<meta property="og:url" content="http://lifeofszh.cn/2014/04/24/Php On Discuz addon develop /index.html">
+<meta property="og:site_name" content="Mark Shang">
+<meta property="og:description" content="第一次接触PHP, 我可以说怎么会有那么不好用的语言吗？ 不伦不类的，既不是C，又没有Python的简洁——Py粉吐槽完毕
+好吧，我的任务是写一个系统用于监控各个论坛的帖子内容，一旦有敏感词，就立马报警。经过一番讨论，打算采用方案一： 前端用DZ的插件形式发送数据到后台，后台负责审查、报警和设置。 至于方案二、三，以后再讨论是怎么pass的。
+今天要说的是我如何征服Discuz 插件的。另外我又要">
+<meta property="og:updated_time" content="2016-03-14T02:51:22.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="关于 Discuz 插件的开发">
+<meta name="twitter:description" content="第一次接触PHP, 我可以说怎么会有那么不好用的语言吗？ 不伦不类的，既不是C，又没有Python的简洁——Py粉吐槽完毕
+好吧，我的任务是写一个系统用于监控各个论坛的帖子内容，一旦有敏感词，就立马报警。经过一番讨论，打算采用方案一： 前端用DZ的插件形式发送数据到后台，后台负责审查、报警和设置。 至于方案二、三，以后再讨论是怎么pass的。
+今天要说的是我如何征服Discuz 插件的。另外我又要">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  
+
+  <link href="/css/styles.css?v=ed12202f" rel="stylesheet">
+
+  
+
+  
+
+</head>
+
+<body>
+
+  
+    <a href="#modal-one" class="toolbox-mobile">盒子</a>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a 
+            class="CIRCLE" 
+            href="/archives/"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a 
+            class="CIRCLE" 
+            href="/tag/"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a 
+            class="CIRCLE" 
+            href="/about/"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#u7F51_u4E0A_u627E_u5230_u4E00_u4E2APHP_POST_u8BF7_u6C42_uFF0C_u633A_u7BA1_u7528"><span class="toc-text">网上找到一个PHP POST请求，挺管用</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-Php On Discuz addon develop " class="article article-type-post" itemscope itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">关于 Discuz 插件的开发</h1>
+
+    <div class="article-meta">
+      <span>2014-04-24</span>
+
+      <span> | </span>
+
+      <span class="article-author">Mark</span>
+
+      <span> | </span>
+
+      
+
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p>第一次接触PHP, 我可以说怎么会有那么不好用的语言吗？ 不伦不类的，既不是C，又没有Python的简洁——Py粉吐槽完毕</p>
+<p>好吧，我的任务是写一个系统用于监控各个论坛的帖子内容，一旦有敏感词，就立马报警。经过一番讨论，打算采用方案一： 前端用DZ的插件形式发送数据到后台，后台负责审查、报警和设置。 至于方案二、三，以后再讨论是怎么pass的。</p>
+<p>今天要说的是我如何征服Discuz 插件的。另外我又要吐槽DZ了，作为一个国内比较成功的论坛框架，网路上居然没有什么关于开发插件的资料——大部分都是写一半，而后一半是要收费的…… 我想站长们都是想钱的主，都不乐于贡献代码和想法啊。 </p>
+<p>我对Php既不熟悉，对Discuz的经验，也仅是停留在注册，发帖的水平。作为一个有开发经验的PHP菜鸟，该怎么做呢？</p>
+<p>首先当然是找资料了，找到如下：</p>
+<ol>
+<li>《Php与Mysql Web开发》 初步了解Php是怎么回事</li>
+<li>《Discuz源码分析与插件开发》初步了解Discuz怎么回事</li>
+<li>Discuz自己的开发文档 学着开发一个测试插件，比如echo ‘hello world’</li>
+</ol>
+<p>凭以上资料，你大概能对PHP和DZ 插件开发有大致的感觉了，接着就是读源码，看名字猜函数用处了。</p>
+<p> 我的计划是：插件定时将当天的帖子信息发到后台端口。不过因为我对PHP并不熟悉，又考虑在后端利用celery启一个定时Worker, 定时向插件索要当天的数据。这样做的好处是充分利用后端开发的优势，简化插件开发。</p>
+<p> 但是在摸索的过程中，发现在DZ中开一个第三方模块（对外接口），需要对源码修改。显然不合符DRY的开发原则，做不到即插即用，还能算插件吗？！而我也不愿意退回原始计划，怎么办？</p>
+<p> 通常解决一个问题，在没有思路的情况下，需要再多问几个问题，和多想几个可能性。比如我为何不放弃定时发送，改为实时发送信息呢？ 那么如果实时发送，又需要哪些东西呢？ DZ有没有现成的一个接口可以监听用户的发帖动作？好有了上述问题，接着就是去问度娘（含谷歌）了。可是她什么也不知道！问同事，同事也不知道。那问问源码吧，找不到……</p>
+<p> 又是死路？ 我就说码农拼得不单单是体力，还有创意啊。就在我心灰意冷，万念俱灰的时候，灵光一闪：有没有现成的插件能做到监听发帖动作的。如果有，就表示有可能。</p>
+<p> 好在运气不差，在搜了半天后，找到一款免费版本插件——发帖邮件通知——免费版的，只能监听一个板块。但是无所谓了，只要有源码，我就能懂！</p>
+<p> 在该插件的基础上，删删改改，发帖测试下——成功收到POST信息！这对我无疑是巨大的鼓舞。后面要做的，就是摸清这个是怎么运作的，并按需求修改。</p>
+<h4 id="u7F51_u4E0A_u627E_u5230_u4E00_u4E2APHP_POST_u8BF7_u6C42_uFF0C_u633A_u7BA1_u7528"><a href="#u7F51_u4E0A_u627E_u5230_u4E00_u4E2APHP_POST_u8BF7_u6C42_uFF0C_u633A_u7BA1_u7528" class="headerlink" title="网上找到一个PHP POST请求，挺管用"></a>网上找到一个PHP POST请求，挺管用</h4> <script src="https://gist.github.com/Mark-Shine/11243497.js"></script>
+
+<p><a href="http://adf.ly/kmbEK" target="_blank" rel="external">Celery 定时任务</a>， 文档很详细，看一下就会用的吧</p>
+
+    
+  </div>
+</article>
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal-one" aria-hidden="true">
+  <a href="#close" class="cover" aria-hidden="true"></a>
+  <div class="modal-dialog">
+    <div class="modal-header">
+      <a href="#close" class="btn-close" aria-hidden="true">关闭</a>
+    </div>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'llloff';
+    
+    var disqus_url = 'http://lifeofszh.cn/2014/04/24/Php On Discuz addon develop /';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+
+    
+
+
+
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/fastclick.js', function() {
+      loadScript('/js/app.js', function() {
+        // load success
+      });
+    });
+  }
+</script>
+
+</body>
+</html>

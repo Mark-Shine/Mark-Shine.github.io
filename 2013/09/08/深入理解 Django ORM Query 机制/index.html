@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>深入理解 Django ORM Query 机制 | Mark Shang</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="Geek," />
+  
+
+  <meta name="description" content="缘起  在和木工讨论优化Django自带分页机制的时候，遇到一个问题：Django 的queryset 在执行分页时，是一次取出所有数据，再按每页大小来分割数据呢，还是一次取出每页大小的数据？  最理想的状态，自然是每次从数据库取每页大小的数据了——实地考察了Django的分页代码后，找到一条最核心的代码：Object.query.all()[bottom:top]  这又引发新的思考：这条代码，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="深入理解 Django ORM Query 机制">
+<meta property="og:url" content="http://lifeofszh.cn/2013/09/08/深入理解 Django ORM Query 机制/index.html">
+<meta property="og:site_name" content="Mark Shang">
+<meta property="og:description" content="缘起  在和木工讨论优化Django自带分页机制的时候，遇到一个问题：Django 的queryset 在执行分页时，是一次取出所有数据，再按每页大小来分割数据呢，还是一次取出每页大小的数据？  最理想的状态，自然是每次从数据库取每页大小的数据了——实地考察了Django的分页代码后，找到一条最核心的代码：Object.query.all()[bottom:top]  这又引发新的思考：这条代码，">
+<meta property="og:updated_time" content="2016-03-14T02:45:19.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="深入理解 Django ORM Query 机制">
+<meta name="twitter:description" content="缘起  在和木工讨论优化Django自带分页机制的时候，遇到一个问题：Django 的queryset 在执行分页时，是一次取出所有数据，再按每页大小来分割数据呢，还是一次取出每页大小的数据？  最理想的状态，自然是每次从数据库取每页大小的数据了——实地考察了Django的分页代码后，找到一条最核心的代码：Object.query.all()[bottom:top]  这又引发新的思考：这条代码，">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  
+
+  <link href="/css/styles.css?v=ed12202f" rel="stylesheet">
+
+  
+
+  
+
+</head>
+
+<body>
+
+  
+    <a href="#modal-one" class="toolbox-mobile">盒子</a>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a 
+            class="CIRCLE" 
+            href="/archives/"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a 
+            class="CIRCLE" 
+            href="/tag/"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a 
+            class="CIRCLE" 
+            href="/about/"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#u7F18_u8D77"><span class="toc-text">缘起</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#u7A76_u7ADF_u2014_u2014_u2014_u2014_u5B9E_u8DF5_u662F_u68C0_u9A8C_u771F_u7406_u7684_u552F_u4E00_u6807_u51C6"><span class="toc-text">究竟————实践是检验真理的唯一标准</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#u526F_u4EA7_u54C1_u2014_u2014QuerySets_are_lazy"><span class="toc-text">副产品——QuerySets are lazy</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#u526F_u4EA7_u54C1_u2014_u2014QuerySets_Cache"><span class="toc-text">副产品——QuerySets Cache</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-深入理解 Django ORM Query 机制" class="article article-type-post" itemscope itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">深入理解 Django ORM Query 机制</h1>
+
+    <div class="article-meta">
+      <span>2013-09-08</span>
+
+      <span> | </span>
+
+      <span class="article-author">Mark</span>
+
+      <span> | </span>
+
+      
+
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h3 id="u7F18_u8D77"><a href="#u7F18_u8D77" class="headerlink" title="缘起"></a>缘起</h3><p>  在和木工讨论优化Django自带分页机制的时候，遇到一个问题：Django 的queryset 在执行分页时，是一次取出所有数据，再按每页大小来分割数据呢，还是一次取出每页大小的数据？<br>  最理想的状态，自然是每次从数据库取每页大小的数据了——实地考察了Django的分页代码后，找到一条最核心的代码：<code>Object.query.all()[bottom:top]</code><br>  这又引发新的思考：这条代码，会从数据库读取全部数据，再做列表的slice吗？</p>
+<h3 id="u7A76_u7ADF_u2014_u2014_u2014_u2014_u5B9E_u8DF5_u662F_u68C0_u9A8C_u771F_u7406_u7684_u552F_u4E00_u6807_u51C6"><a href="#u7A76_u7ADF_u2014_u2014_u2014_u2014_u5B9E_u8DF5_u662F_u68C0_u9A8C_u771F_u7406_u7684_u552F_u4E00_u6807_u51C6" class="headerlink" title="究竟————实践是检验真理的唯一标准"></a>究竟————实践是检验真理的唯一标准</h3><p>  如果<code>Object.query.all()[bottom:top]</code>取的是全部数据，再切片，那么她的实际执行时间和<code>Object.query.all()</code>应该是相同或略大于。实验结果是前者的时间明显小于后者，相差一千倍。木工指出：这里看到的时间虽然确实相差很大，但还不能直接得出，QuerySet的slice 数据读取是部分的，我们需要更本质的证据，比如SQL。<br>  确实以上的实验，不具备普遍性，也不够精确，只能说是个经验方法，所以接下来我们就搬出重型武器——<code>From django.db import connection</code><br>  connection 返回每次生成的SQL的语句和执行时间列表<br>  打印的结果是：</p>
+<pre><code>Object.query.all()[0:9] 生成 select * from xx limit 10 …
+Object.query.all() 则不含有limit 10
+</code></pre><p>   原来如此！</p>
+<h3 id="u526F_u4EA7_u54C1_u2014_u2014QuerySets_are_lazy"><a href="#u526F_u4EA7_u54C1_u2014_u2014QuerySets_are_lazy" class="headerlink" title="副产品——QuerySets are lazy"></a>副产品——QuerySets are lazy</h3><p>  查询Django的官方文档，找到关键字lazy 。是的，几乎所有的ORM查询采用的都是lazy的!</p>
+<pre><code>QuerySets are lazy – the act of creating a QuerySet doesn’t involve any database activity. You can stack filters together all day long, and Django won’t actually run the query until the QuerySet is evaluated. Take a look at this example:
+</code></pre><p>  这段的大意是：QuerySet 不会直接出发数据库，只有当你想要获取里面的数据时才会有所动作，比如打印每条记录</p>
+<pre><code>demands = Demnad.objects.all()   #不会生成SQL语句
+print [d.id for d in demands ]   #生成SQL语句，并执行
+</code></pre><p>  同样的还有</p>
+<pre><code>len(demands)
+list(demands)
+</code></pre><p>  不难得出结论：<code>list(demands)[0:9]</code> 效率明显要低于<code>demands[0:9]</code><br>  这是因为list()操作 相当于print，迫使QuerySet生成SQL并执行获取全部数据<br>  类似的还有len()，她的替代方案是QuerySet 的count的函数</p>
+<p><a href="https://docs.djangoproject.com/en/dev/topics/db/queries/#querysets-are-lazy" target="_blank" rel="external">QuerySet are lazy</a>  </p>
+<h3 id="u526F_u4EA7_u54C1_u2014_u2014QuerySets_Cache"><a href="#u526F_u4EA7_u54C1_u2014_u2014QuerySets_Cache" class="headerlink" title="副产品——QuerySets Cache"></a>副产品——QuerySets Cache</h3><p>  记住以下几点：</p>
+<pre><code>print([e.headline for e in Entry.objects.all()])
+print([e.headline for e in Entry.objects.all()])
+</code></pre><p>  执行两次Entry.objects.all()系统Cache不会缓存，只有当你<code>entry_query = Entry.objects.all()</code> 才会有缓存</p>
+<pre><code>queryset = Entry.objects.all()
+print queryset[5] QuerySet的slice不会被缓存
+[entry for entry in queryset]
+print queryset[5] 除非已经计算过的
+</code></pre><p><a href="https://docs.djangoproject.com/en/dev/topics/db/queries/#caching-and-querysets" target="_blank" rel="external"> QuerySets Cache</a></p>
+
+    
+  </div>
+</article>
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal-one" aria-hidden="true">
+  <a href="#close" class="cover" aria-hidden="true"></a>
+  <div class="modal-dialog">
+    <div class="modal-header">
+      <a href="#close" class="btn-close" aria-hidden="true">关闭</a>
+    </div>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'llloff';
+    
+    var disqus_url = 'http://lifeofszh.cn/2013/09/08/深入理解 Django ORM Query 机制/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+
+    
+
+
+
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/fastclick.js', function() {
+      loadScript('/js/app.js', function() {
+        // load success
+      });
+    });
+  }
+</script>
+
+</body>
+</html>
