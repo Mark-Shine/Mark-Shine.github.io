@@ -4,7 +4,7 @@
   <subtitle><![CDATA[To be a good man]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://lifeofszh.cn/"/>
-  <updated>2016-03-18T04:07:01.000Z</updated>
+  <updated>2016-05-20T14:06:53.000Z</updated>
   <id>http://lifeofszh.cn/</id>
   
   <author>
@@ -13,6 +13,29 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[五月的一些事情]]></title>
+    <link href="http://lifeofszh.cn/2016/05/20/%E4%BA%94%E6%9C%88%E7%9A%84%E4%B8%80%E4%BA%9B%E4%BA%8B%E6%83%85/"/>
+    <id>http://lifeofszh.cn/2016/05/20/五月的一些事情/</id>
+    <published>2016-05-20T13:43:40.000Z</published>
+    <updated>2016-05-20T14:06:53.000Z</updated>
+    <content type="html"><![CDATA[<p>这个月真是不太平，事情一波接一波</p>
+<h3 id="u75C5_u6765_u5982_u5C71_u5012"><a href="#u75C5_u6765_u5982_u5C71_u5012" class="headerlink" title="病来如山倒"></a>病来如山倒</h3><p>月初的时候，突然接到电话说大姨进了医院ICU。第二天去探望时，医生已经下了病危诊断，第三天的时候，大姨去世。</p>
+<p>由于肺部突然衰竭，当天晚上送去医院时，已经丧失说话的能力。 直到最后去世，都没能从昏迷中醒来。</p>
+<h4 id="u767D_u7EC6_u80DE_u6307_u6570_18"><a href="#u767D_u7EC6_u80DE_u6307_u6570_18" class="headerlink" title="白细胞指数 18"></a>白细胞指数 18</h4><p>为大姨送完丧，回家没几天，咳嗽好了的航航又发烧39.5度。医生说细菌感染，白细胞到了18，可能要输液才能退烧。我是极不支持输液治疗的，和老婆商量先用退烧药配合物理降温，如果能退掉，就不用输液了。</p>
+<p>那天晚上，我们给航航反反复复擦了好几次身子，夜里睡到一半也会醒来，摸摸看温度退了没有。</p>
+<p>就这样反反复复弄了几个晚上，终于是控制住了，也算稍微心安了点。</p>
+<h3 id="u4E00_u573A_u53EF_u80FD_u7684_u5B98_u53F8"><a href="#u4E00_u573A_u53EF_u80FD_u7684_u5B98_u53F8" class="headerlink" title="一场可能的官司"></a>一场可能的官司</h3><p>父亲租赁出去的工厂，因为承租的人，不按规定随意处理工厂废物，被环保局查到铬超标。父亲很有可能面临高额处罚及牢狱之灾。父亲只是简单的说了下情况，我知道其实是很严重的，只是他不希望我和母亲担心的睡不着觉。 </p>
+<h3 id="u4E00_u4E9B_u5E0C_u671B"><a href="#u4E00_u4E9B_u5E0C_u671B" class="headerlink" title="一些希望"></a>一些希望</h3><p>海淘家装产品的生意，进展不错，虽然有些困难，但都是能够克服的。 为什么要从程序员转行做生意？ 因为技术是为生活服务的，我不想出卖技术换取固定的工资，我希望能付出更多，获得更多。 即使没有父亲的工厂，我依然可以生活得更好。</p>
+<h3 id="u5199_u5728_u6700_u540E"><a href="#u5199_u5728_u6700_u540E" class="headerlink" title="写在最后"></a>写在最后</h3><p>一个家族，不能没有一位医生，没有一位律师。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>这个月真是不太平，事情一波接一波</p>
+<h3 id="u75C5_u6765_u5982_u5C71_u5012"><a href="#u75C5_u6765_u5982_u5C71_u5012" class="headerlink" title="病来如山倒"></a]]>
+    </summary>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[Sketch体验]]></title>
@@ -773,33 +796,6 @@ Because the view is just a projection of the model, the controller is completely
 ]]></content>
     <summary type="html">
     <![CDATA[<h3 id="u521B_u5EFA_u591A_u4E2Assh_id_for_Mac_OSX_2C_GitBash_2C_and_Linux"><a href="#u521B_u5EFA_u591A_u4E2Assh_id_for_Mac_OSX_2C_GitBash_2C]]>
-    </summary>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[vim 编辑远程文件]]></title>
-    <link href="http://lifeofszh.cn/2013/09/24/vim%20edit%20remotely/"/>
-    <id>http://lifeofszh.cn/2013/09/24/vim edit remotely/</id>
-    <published>2013-09-23T16:00:00.000Z</published>
-    <updated>2016-03-14T02:54:14.000Z</updated>
-    <content type="html"><![CDATA[<pre><code>scp -r -P 3389 ada@ued.etao.net:/path1/  ~/Download/path2/
-</code></pre><p>上面这个命令，用来从远程端拷贝文件到本地路径，如果没有加过ids_pub，则需要-c 输入密码了</p>
-<p>那么如何用vim打开远程端的文件呢？<br>一般的思路是：</p>
-<ol>
-<li>从远程拷贝文件到到本地</li>
-<li>修改</li>
-<li>上传回远程端</li>
-</ol>
-<p>如果vim 能够直接打开scp的文件就好了</p>
-<pre><code>vim scp://ada@ued.etao.net/../../tgdemand/views.py
-</code></pre><p>还有一些同学对此做了扩展：<a href="http://jeetworks.org/node/102" target="_blank" rel="external">Editing Remote Files with Your Local Vim Using the SCP Protocol … with Bash Completion!</a></p>
-<p>最近在研究用pyqt做网页截屏…… 虽然在本地是能够截屏，但在那悲催的虚拟机里，尼玛就是不停出现segmention fault …… </p>
-]]></content>
-    <summary type="html">
-    <![CDATA[<pre><code>scp -r -P 3389 ada@ued.etao.net:/path1/  ~/Download/path2/
-</code></pre><p>上面这个命令，用来从远程端拷贝文件到本地路径，如果没有加过ids_pub，则需要-c 输入密码了</p>
-<]]>
     </summary>
     
   </entry>

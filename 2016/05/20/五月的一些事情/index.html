@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>五月的一些事情 | Mark Shang</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="Mark Shang,后端,系统设计,Python, Django, Celery, Redis" />
+  
+
+  <meta name="description" content="这个月真是不太平，事情一波接一波
+病来如山倒月初的时候，突然接到电话说大姨进了医院ICU。第二天去探望时，医生已经下了病危诊断，第三天的时候，大姨去世。
+由于肺部突然衰竭，当天晚上送去医院时，已经丧失说话的能力。 直到最后去世，都没能从昏迷中醒来。
+白细胞指数 18为大姨送完丧，回家没几天，咳嗽好了的航航又发烧39.5度。医生说细菌感染，白细胞到了18，可能要输液才能退烧。我是极不支持输液治疗的，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="五月的一些事情">
+<meta property="og:url" content="http://lifeofszh.cn/2016/05/20/五月的一些事情/index.html">
+<meta property="og:site_name" content="Mark Shang">
+<meta property="og:description" content="这个月真是不太平，事情一波接一波
+病来如山倒月初的时候，突然接到电话说大姨进了医院ICU。第二天去探望时，医生已经下了病危诊断，第三天的时候，大姨去世。
+由于肺部突然衰竭，当天晚上送去医院时，已经丧失说话的能力。 直到最后去世，都没能从昏迷中醒来。
+白细胞指数 18为大姨送完丧，回家没几天，咳嗽好了的航航又发烧39.5度。医生说细菌感染，白细胞到了18，可能要输液才能退烧。我是极不支持输液治疗的，">
+<meta property="og:updated_time" content="2016-05-20T14:06:53.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="五月的一些事情">
+<meta name="twitter:description" content="这个月真是不太平，事情一波接一波
+病来如山倒月初的时候，突然接到电话说大姨进了医院ICU。第二天去探望时，医生已经下了病危诊断，第三天的时候，大姨去世。
+由于肺部突然衰竭，当天晚上送去医院时，已经丧失说话的能力。 直到最后去世，都没能从昏迷中醒来。
+白细胞指数 18为大姨送完丧，回家没几天，咳嗽好了的航航又发烧39.5度。医生说细菌感染，白细胞到了18，可能要输液才能退烧。我是极不支持输液治疗的，">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  
+
+  <link href="/css/styles.css?v=ed12202f" rel="stylesheet">
+
+  
+
+  
+
+</head>
+
+<body>
+
+  
+    <a href="#modal-one" class="toolbox-mobile">盒子</a>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a 
+            class="CIRCLE" 
+            href="/archives/"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a 
+            class="CIRCLE" 
+            href="/tag/"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a 
+            class="CIRCLE" 
+            href="/about/"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#u75C5_u6765_u5982_u5C71_u5012"><span class="toc-text">病来如山倒</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#u767D_u7EC6_u80DE_u6307_u6570_18"><span class="toc-text">白细胞指数 18</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#u4E00_u573A_u53EF_u80FD_u7684_u5B98_u53F8"><span class="toc-text">一场可能的官司</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#u4E00_u4E9B_u5E0C_u671B"><span class="toc-text">一些希望</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#u5199_u5728_u6700_u540E"><span class="toc-text">写在最后</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-五月的一些事情" class="article article-type-post" itemscope itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">五月的一些事情</h1>
+
+    <div class="article-meta">
+      <span>2016-05-20</span>
+
+      <span> | </span>
+
+      <span class="article-author">Mark</span>
+
+      <span> | </span>
+
+      
+
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p>这个月真是不太平，事情一波接一波</p>
+<h3 id="u75C5_u6765_u5982_u5C71_u5012"><a href="#u75C5_u6765_u5982_u5C71_u5012" class="headerlink" title="病来如山倒"></a>病来如山倒</h3><p>月初的时候，突然接到电话说大姨进了医院ICU。第二天去探望时，医生已经下了病危诊断，第三天的时候，大姨去世。</p>
+<p>由于肺部突然衰竭，当天晚上送去医院时，已经丧失说话的能力。 直到最后去世，都没能从昏迷中醒来。</p>
+<h4 id="u767D_u7EC6_u80DE_u6307_u6570_18"><a href="#u767D_u7EC6_u80DE_u6307_u6570_18" class="headerlink" title="白细胞指数 18"></a>白细胞指数 18</h4><p>为大姨送完丧，回家没几天，咳嗽好了的航航又发烧39.5度。医生说细菌感染，白细胞到了18，可能要输液才能退烧。我是极不支持输液治疗的，和老婆商量先用退烧药配合物理降温，如果能退掉，就不用输液了。</p>
+<p>那天晚上，我们给航航反反复复擦了好几次身子，夜里睡到一半也会醒来，摸摸看温度退了没有。</p>
+<p>就这样反反复复弄了几个晚上，终于是控制住了，也算稍微心安了点。</p>
+<h3 id="u4E00_u573A_u53EF_u80FD_u7684_u5B98_u53F8"><a href="#u4E00_u573A_u53EF_u80FD_u7684_u5B98_u53F8" class="headerlink" title="一场可能的官司"></a>一场可能的官司</h3><p>父亲租赁出去的工厂，因为承租的人，不按规定随意处理工厂废物，被环保局查到铬超标。父亲很有可能面临高额处罚及牢狱之灾。父亲只是简单的说了下情况，我知道其实是很严重的，只是他不希望我和母亲担心的睡不着觉。 </p>
+<h3 id="u4E00_u4E9B_u5E0C_u671B"><a href="#u4E00_u4E9B_u5E0C_u671B" class="headerlink" title="一些希望"></a>一些希望</h3><p>海淘家装产品的生意，进展不错，虽然有些困难，但都是能够克服的。 为什么要从程序员转行做生意？ 因为技术是为生活服务的，我不想出卖技术换取固定的工资，我希望能付出更多，获得更多。 即使没有父亲的工厂，我依然可以生活得更好。</p>
+<h3 id="u5199_u5728_u6700_u540E"><a href="#u5199_u5728_u6700_u540E" class="headerlink" title="写在最后"></a>写在最后</h3><p>一个家族，不能没有一位医生，没有一位律师。</p>
+
+    
+  </div>
+</article>
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal-one" aria-hidden="true">
+  <a href="#close" class="cover" aria-hidden="true"></a>
+  <div class="modal-dialog">
+    <div class="modal-header">
+      <a href="#close" class="btn-close" aria-hidden="true">关闭</a>
+    </div>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+
+
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/fastclick.js', function() {
+      loadScript('/js/app.js', function() {
+        // load success
+      });
+    });
+  }
+</script>
+
+</body>
+</html>
