@@ -4,7 +4,7 @@
   <subtitle><![CDATA[To be a good man]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://lifeofszh.cn/"/>
-  <updated>2016-05-20T14:06:53.000Z</updated>
+  <updated>2016-06-11T03:51:42.000Z</updated>
   <id>http://lifeofszh.cn/</id>
   
   <author>
@@ -13,6 +13,40 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[记录]]></title>
+    <link href="http://lifeofszh.cn/2016/06/11/%E8%AE%B0%E5%BD%95/"/>
+    <id>http://lifeofszh.cn/2016/06/11/记录/</id>
+    <published>2016-06-11T03:10:14.000Z</published>
+    <updated>2016-06-11T03:51:42.000Z</updated>
+    <content type="html"><![CDATA[<blockquote>
+<p>不要被利益蒙蔽眼睛，做好风险控制。</p>
+</blockquote>
+<h3 id="u4E0D_u662F_u6587_u7AE0_uFF0C_u53EA_u662F_u6982_u8981"><a href="#u4E0D_u662F_u6587_u7AE0_uFF0C_u53EA_u662F_u6982_u8981" class="headerlink" title="不是文章，只是概要"></a>不是文章，只是概要</h3><h4 id="u4FDD_u6301_u4E13_u6CE8"><a href="#u4FDD_u6301_u4E13_u6CE8" class="headerlink" title="保持专注"></a>保持专注</h4><p>很小就懂的道理，做事情要专心。 自己却很难做到，一些零散的消息和想法，立马会把注意力带偏—— 事情做到一半放下不如不要开始。</p>
+<p>写文案、写代码、写邮件的时候，一个消息提示，或者临时收到消息都要放下手头的事情，回头重新写时，就要花很多精力去回忆之前的思路。 </p>
+<p>番茄的做法很对，但是不喜欢太死板的去遵守，所以在心里记住不要轻易被打断。</p>
+<h4 id="u8B66_u60D5_u98CE_u9669__u5E73_u65F6_u591A_u6D41_u6C57_uFF0C_u6218_u65F6_u5C11_u6D41_u8840"><a href="#u8B66_u60D5_u98CE_u9669__u5E73_u65F6_u591A_u6D41_u6C57_uFF0C_u6218_u65F6_u5C11_u6D41_u8840" class="headerlink" title="警惕风险 平时多流汗，战时少流血"></a>警惕风险 平时多流汗，战时少流血</h4><p>人更愿意看到自己想看到的，显然在一大笔收益面前，是不愿意去看背后隐藏的风险——做好所有准备，评估好风险。什么意思？ 成为这个领域的专家，把不知道的了解清楚一一排除隐患。</p>
+<h4 id="u5927_u5C40_u89C2__u603B_u4F53_u8BBE_u8BA1_uFF0C_u5206_u6B65_u5B9E_u65BD"><a href="#u5927_u5C40_u89C2__u603B_u4F53_u8BBE_u8BA1_uFF0C_u5206_u6B65_u5B9E_u65BD" class="headerlink" title="大局观 总体设计，分步实施"></a>大局观 总体设计，分步实施</h4><p>感谢几位同学的指点和讨论，显然大家都提出了定位的概念，不论定位高还是低，重要的是，要有自己的定位，然后找到方向，做好布局——从大处着手。</p>
+<blockquote>
+<p>定位决定你的方向和模式</p>
+</blockquote>
+<p>开发程序通常有两种思路，自顶向下（设计好程序框架再去具体实施）和自底向上（先实现具体代码，再调整框架），两者各优势。但是显然，自底向上的方式，很容易跑偏方向——放到生活中，走错方向的成本太高了（时间成本、机会成本和资金成本） 。</p>
+<p>这么说吧，之前花了很多时间做了一套在线购物系统，在实际中，并没有发挥应有的价值，反而消耗了我非常多的精力和时间——虽然我也乐在其中，但是这样可赚不了钱——程序猿的通病吗？自己喜欢就好。</p>
+<p>找准定位，设计好商业模式，剩下的就是实施。</p>
+<blockquote>
+<p>无头苍蝇做不成任何事情。</p>
+</blockquote>
+<p>附录：<br><a href="http://blog.csdn.net/xianshengsun/article/details/7558052" target="_blank" rel="external">自顶向下向底向上开发信息系统的优缺点</a></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<blockquote>
+<p>不要被利益蒙蔽眼睛，做好风险控制。</p>
+</blockquote>
+<h3 id="u4E0D_u662F_u6587_u7AE0_uFF0C_u53EA_u662F_u6982_u8981"><a href="#u4E0D_u662F_u65]]>
+    </summary>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[五月的一些事情]]></title>
@@ -773,30 +807,6 @@ Because the view is just a projection of the model, the controller is completely
     </summary>
     
       <category term="angular" scheme="http://lifeofszh.cn/tags/angular/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[2013-10-14]]></title>
-    <link href="http://lifeofszh.cn/2013/10/14/2013-10-14/"/>
-    <id>http://lifeofszh.cn/2013/10/14/2013-10-14/</id>
-    <published>2013-10-13T16:00:00.000Z</published>
-    <updated>2016-03-14T02:25:55.000Z</updated>
-    <content type="html"><![CDATA[<h3 id="u521B_u5EFA_u591A_u4E2Assh_id_for_Mac_OSX_2C_GitBash_2C_and_Linux"><a href="#u521B_u5EFA_u591A_u4E2Assh_id_for_Mac_OSX_2C_GitBash_2C_and_Linux" class="headerlink" title="创建多个ssh id for Mac OSX, GitBash, and Linux"></a>创建多个ssh id for Mac OSX, GitBash, and Linux</h3><p>因为业务需要，不得不考虑用多个id连接服务器，在此考虑这个<a href="https://confluence.atlassian.com/pages/viewpage.action?pageId=271943168" target="_blank" rel="external">教程</a></p>
-<pre><code>1. ssh-keygen -f ~/.ssh/personalid -C &quot;personalid
-2. vim ~/.ssh/config
-3. Host workdid
-   HostName bitbucket.org
-   IdentityFile ~/.ssh/workdid
-   Host personalid
-   HostName bitbucket.org
-   IdentityFile ~/.ssh/personalid
-</code></pre><p>完毕</p>
-<h3 id="u5176_u4ED6"><a href="#u5176_u4ED6" class="headerlink" title="其他"></a>其他</h3><p>从维修点，拿回更换了ssd的air<br>安妮耳朵坏了，医生说修一下要2500＋<br>带安妮看完医生，回家路上，女朋友的手机落在租车上<br>最近睡不好，梦到故人</p>
-]]></content>
-    <summary type="html">
-    <![CDATA[<h3 id="u521B_u5EFA_u591A_u4E2Assh_id_for_Mac_OSX_2C_GitBash_2C_and_Linux"><a href="#u521B_u5EFA_u591A_u4E2Assh_id_for_Mac_OSX_2C_GitBash_2C]]>
-    </summary>
     
   </entry>
   

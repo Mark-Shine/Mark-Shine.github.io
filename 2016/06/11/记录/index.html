@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>记录 | Mark Shang</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="Mark Shang,后端,系统设计,Python, Django, Celery, Redis" />
+  
+
+  <meta name="description" content="不要被利益蒙蔽眼睛，做好风险控制。
+
+不是文章，只是概要保持专注很小就懂的道理，做事情要专心。 自己却很难做到，一些零散的消息和想法，立马会把注意力带偏—— 事情做到一半放下不如不要开始。
+写文案、写代码、写邮件的时候，一个消息提示，或者临时收到消息都要放下手头的事情，回头重新写时，就要花很多精力去回忆之前的思路。 
+番茄的做法很对，但是不喜欢太死板的去遵守，所以在心里记住不要轻易被打断。
+警惕风">
+<meta property="og:type" content="article">
+<meta property="og:title" content="记录">
+<meta property="og:url" content="http://lifeofszh.cn/2016/06/11/记录/index.html">
+<meta property="og:site_name" content="Mark Shang">
+<meta property="og:description" content="不要被利益蒙蔽眼睛，做好风险控制。
+
+不是文章，只是概要保持专注很小就懂的道理，做事情要专心。 自己却很难做到，一些零散的消息和想法，立马会把注意力带偏—— 事情做到一半放下不如不要开始。
+写文案、写代码、写邮件的时候，一个消息提示，或者临时收到消息都要放下手头的事情，回头重新写时，就要花很多精力去回忆之前的思路。 
+番茄的做法很对，但是不喜欢太死板的去遵守，所以在心里记住不要轻易被打断。
+警惕风">
+<meta property="og:updated_time" content="2016-06-11T03:51:42.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="记录">
+<meta name="twitter:description" content="不要被利益蒙蔽眼睛，做好风险控制。
+
+不是文章，只是概要保持专注很小就懂的道理，做事情要专心。 自己却很难做到，一些零散的消息和想法，立马会把注意力带偏—— 事情做到一半放下不如不要开始。
+写文案、写代码、写邮件的时候，一个消息提示，或者临时收到消息都要放下手头的事情，回头重新写时，就要花很多精力去回忆之前的思路。 
+番茄的做法很对，但是不喜欢太死板的去遵守，所以在心里记住不要轻易被打断。
+警惕风">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  
+
+  <link href="/css/styles.css?v=ed12202f" rel="stylesheet">
+
+  
+
+  
+
+</head>
+
+<body>
+
+  
+    <a href="#modal-one" class="toolbox-mobile">盒子</a>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a 
+            class="CIRCLE" 
+            href="/archives/"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a 
+            class="CIRCLE" 
+            href="/tag/"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a 
+            class="CIRCLE" 
+            href="/about/"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#u4E0D_u662F_u6587_u7AE0_uFF0C_u53EA_u662F_u6982_u8981"><span class="toc-text">不是文章，只是概要</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#u4FDD_u6301_u4E13_u6CE8"><span class="toc-text">保持专注</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#u8B66_u60D5_u98CE_u9669__u5E73_u65F6_u591A_u6D41_u6C57_uFF0C_u6218_u65F6_u5C11_u6D41_u8840"><span class="toc-text">警惕风险 平时多流汗，战时少流血</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#u5927_u5C40_u89C2__u603B_u4F53_u8BBE_u8BA1_uFF0C_u5206_u6B65_u5B9E_u65BD"><span class="toc-text">大局观 总体设计，分步实施</span></a></li></ol></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-记录" class="article article-type-post" itemscope itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">记录</h1>
+
+    <div class="article-meta">
+      <span>2016-06-11</span>
+
+      <span> | </span>
+
+      <span class="article-author">Mark</span>
+
+      <span> | </span>
+
+      
+
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <blockquote>
+<p>不要被利益蒙蔽眼睛，做好风险控制。</p>
+</blockquote>
+<h3 id="u4E0D_u662F_u6587_u7AE0_uFF0C_u53EA_u662F_u6982_u8981"><a href="#u4E0D_u662F_u6587_u7AE0_uFF0C_u53EA_u662F_u6982_u8981" class="headerlink" title="不是文章，只是概要"></a>不是文章，只是概要</h3><h4 id="u4FDD_u6301_u4E13_u6CE8"><a href="#u4FDD_u6301_u4E13_u6CE8" class="headerlink" title="保持专注"></a>保持专注</h4><p>很小就懂的道理，做事情要专心。 自己却很难做到，一些零散的消息和想法，立马会把注意力带偏—— 事情做到一半放下不如不要开始。</p>
+<p>写文案、写代码、写邮件的时候，一个消息提示，或者临时收到消息都要放下手头的事情，回头重新写时，就要花很多精力去回忆之前的思路。 </p>
+<p>番茄的做法很对，但是不喜欢太死板的去遵守，所以在心里记住不要轻易被打断。</p>
+<h4 id="u8B66_u60D5_u98CE_u9669__u5E73_u65F6_u591A_u6D41_u6C57_uFF0C_u6218_u65F6_u5C11_u6D41_u8840"><a href="#u8B66_u60D5_u98CE_u9669__u5E73_u65F6_u591A_u6D41_u6C57_uFF0C_u6218_u65F6_u5C11_u6D41_u8840" class="headerlink" title="警惕风险 平时多流汗，战时少流血"></a>警惕风险 平时多流汗，战时少流血</h4><p>人更愿意看到自己想看到的，显然在一大笔收益面前，是不愿意去看背后隐藏的风险——做好所有准备，评估好风险。什么意思？ 成为这个领域的专家，把不知道的了解清楚一一排除隐患。</p>
+<h4 id="u5927_u5C40_u89C2__u603B_u4F53_u8BBE_u8BA1_uFF0C_u5206_u6B65_u5B9E_u65BD"><a href="#u5927_u5C40_u89C2__u603B_u4F53_u8BBE_u8BA1_uFF0C_u5206_u6B65_u5B9E_u65BD" class="headerlink" title="大局观 总体设计，分步实施"></a>大局观 总体设计，分步实施</h4><p>感谢几位同学的指点和讨论，显然大家都提出了定位的概念，不论定位高还是低，重要的是，要有自己的定位，然后找到方向，做好布局——从大处着手。</p>
+<blockquote>
+<p>定位决定你的方向和模式</p>
+</blockquote>
+<p>开发程序通常有两种思路，自顶向下（设计好程序框架再去具体实施）和自底向上（先实现具体代码，再调整框架），两者各优势。但是显然，自底向上的方式，很容易跑偏方向——放到生活中，走错方向的成本太高了（时间成本、机会成本和资金成本） 。</p>
+<p>这么说吧，之前花了很多时间做了一套在线购物系统，在实际中，并没有发挥应有的价值，反而消耗了我非常多的精力和时间——虽然我也乐在其中，但是这样可赚不了钱——程序猿的通病吗？自己喜欢就好。</p>
+<p>找准定位，设计好商业模式，剩下的就是实施。</p>
+<blockquote>
+<p>无头苍蝇做不成任何事情。</p>
+</blockquote>
+<p>附录：<br><a href="http://blog.csdn.net/xianshengsun/article/details/7558052" target="_blank" rel="external">自顶向下向底向上开发信息系统的优缺点</a></p>
+
+    
+  </div>
+</article>
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal-one" aria-hidden="true">
+  <a href="#close" class="cover" aria-hidden="true"></a>
+  <div class="modal-dialog">
+    <div class="modal-header">
+      <a href="#close" class="btn-close" aria-hidden="true">关闭</a>
+    </div>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+
+
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/fastclick.js', function() {
+      loadScript('/js/app.js', function() {
+        // load success
+      });
+    });
+  }
+</script>
+
+</body>
+</html>
